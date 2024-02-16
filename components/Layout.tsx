@@ -42,7 +42,7 @@ export default async function Layout({
       >
         <Link href="/">
           <Flex align="center">
-            <RiBox1Line size={34} />
+            <RiBox1Line size={34} style={{ marginRight: 4 }} />
             <Title
               level={1}
               style={{
