@@ -46,7 +46,16 @@ const columns: ColumnsType<TpsData> = [
     dataIndex: "kecamatan",
     width: 140,
   },
-
+  {
+    key: "kelurahan",
+    title: () => (
+      <Tooltip title="Dari web KPU" placement="bottom">
+        Kelurahan
+      </Tooltip>
+    ),
+    dataIndex: "kelurahan",
+    width: 140,
+  },
   {
     key: "tps",
     title: () => (
@@ -97,7 +106,7 @@ const columns: ColumnsType<TpsData> = [
     width: 110,
   },
   {
-    key: "total_votes",
+    key: "total_sum_votes",
     title: () => (
       <Tooltip
         title="Dijumlahkan dari kolom Jumlah Suara Paslon 01 + 02 + 03"
@@ -106,7 +115,7 @@ const columns: ColumnsType<TpsData> = [
         Jumlah Suara Seluruh Paslon
       </Tooltip>
     ),
-    dataIndex: "total_votes",
+    dataIndex: "total_sum_votes",
     width: 110,
   },
   {
