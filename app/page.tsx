@@ -13,7 +13,7 @@ export const revalidate = 0;
 export default async function Page() {
   const supabase = createClient();
 
-  const { data } = await supabase.from("kpu_tps_data-error-1").select();
+  const { data } = await supabase.from("kpu_tps_data_error_1").select();
 
   const insight: Insight = data !== null ? data[0] : null;
   // let dataArray: User[] = [];
