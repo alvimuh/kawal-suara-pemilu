@@ -97,7 +97,7 @@ export default async function Page() {
                   // precision={2}
                   valueStyle={{ color: "#3f8600" }}
                   // prefix={<ArrowUpOutlined />}
-                  suffix="suara"
+                  suffix="TPS"
                 />
               </Card>
             </Col>
@@ -109,7 +109,7 @@ export default async function Page() {
                   // precision={2}
                   valueStyle={{ color: "#cf1322" }}
                   // prefix={<ArrowDownOutlined />}
-                  suffix="suara"
+                  suffix="TPS"
                 />
               </Card>
             </Col>
@@ -119,7 +119,7 @@ export default async function Page() {
                 dengan hasil penjumlahan suara dari ketiga paslon tidak sama.
                 Misalnya, jika dijumlahkan hasil perolehan suara Paslon 01+02+03
                 adalah 300 suara, tapi pada field Jumlah Suara Sah adalah 200,
-                maka terdapat selisih 100 data.
+                maka terdapat selisih 100 data yang menyebabkan tidak valid.
               </Paragraph>
               <Button size="large" type="primary" href="/error_1">
                 Cek Data Terbaru
