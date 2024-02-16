@@ -5,14 +5,26 @@ import { RiBox1Line } from "react-icons/ri";
 import Title from "antd/es/typography/Title";
 import { Flex } from "antd";
 import Link from "next/link";
+import Paragraph from "antd/es/typography/Paragraph";
+import { createClient } from "@/utils/supabase/client";
+import { Insight } from "@/lib/types";
+import dayjs from "dayjs";
 
-export default function Layout({
+export const revalidate = 0;
+
+export default async function Layout({
   children,
   contentStyle,
 }: {
   children: React.ReactNode;
   contentStyle?: React.CSSProperties | undefined;
 }) {
+  const supabase = createClient();
+
+  const { data } = await supabase.from("kpu_tps_data_error_1").select();
+
+  const insight: Insight = data !== null ? data[0] : null;
+
   return (
     <LayoutAntd>
       <Header
@@ -49,6 +61,10 @@ export default function Layout({
       </Content>
 
       <Footer style={{ textAlign: "center", background: "white" }}>
+        <Paragraph style={{ color: "GrayText" }}>
+          Terakhir disingkronkan pada{" "}
+          {dayjs(insight.last_update).format("HH:MM DD/MM/YYYY")}
+        </Paragraph>
         Alvilab ©{new Date().getFullYear()} Pemilu Damai
       </Footer>
     </LayoutAntd>

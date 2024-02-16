@@ -3,6 +3,7 @@ import { valueType } from "antd/es/statistic/utils";
 export interface Insight {
   jumlah_sama: valueType;
   jumlah_tidak_sama: valueType;
+  jumlah_tps: number;
   last_update: number;
 }
 
