@@ -1,7 +1,9 @@
 "use client";
 
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Button, Table, Tag, Tooltip } from "antd";
-import { ColumnsType } from "antd/es/table";
+import { ColumnsType, TablePaginationConfig } from "antd/es/table";
+import { useEffect, useState } from "react";
 
 const columns: ColumnsType<TpsData> = [
   {
@@ -180,7 +182,37 @@ const columns: ColumnsType<TpsData> = [
   },
 ];
 
-export default function MainTable({ data }: { data: TpsData[] }) {
+export default function MainTable({
+  data,
+  total,
+}: {
+  data: TpsData[];
+  total: number;
+}) {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+  const [currentPagination, setCurrentPagination] = useState<
+    number | undefined
+  >(undefined);
+
+  const handleChange = (pagination: TablePaginationConfig) => {
+    if (pagination.current && pagination.pageSize) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", pagination.current.toString());
+      params.set("size", pagination.pageSize.toString());
+      setCurrentPagination(pagination.current);
+      replace(`${pathname}?${params.toString()}`);
+    }
+  };
+
+  const searchParamsPage = searchParams.get("page");
+  useEffect(() => {
+    if (typeof searchParamsPage == "string") {
+      setCurrentPagination(parseInt(searchParamsPage));
+    }
+  }, [searchParamsPage]);
+
   return (
     <Table
       columns={columns}
@@ -188,6 +220,11 @@ export default function MainTable({ data }: { data: TpsData[] }) {
       scroll={{ x: 1500 }}
       bordered
       rowKey="code"
+      pagination={{
+        total: total,
+        current: currentPagination,
+      }}
+      onChange={handleChange}
     />
   );
 }
