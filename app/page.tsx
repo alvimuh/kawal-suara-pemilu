@@ -13,7 +13,7 @@ export const revalidate = 0;
 export default async function Page() {
   const supabase = createClient();
 
-  const { data } = await supabase.from("kpu_tps_error_1").select();
+  const { data } = await supabase.from("kpu_tps_data-error-1").select();
 
   const insight: Insight = data !== null ? data[0] : null;
   // let dataArray: User[] = [];
@@ -61,8 +61,8 @@ export default async function Page() {
             <Statistic
               title="Valid"
               value={insight.jumlah_sama}
-              // precision={2}
               valueStyle={{ color: "#3f8600" }}
+              groupSeparator="."
               // prefix={<ArrowUpOutlined />}
               suffix="TPS"
             />
@@ -71,10 +71,10 @@ export default async function Page() {
         <Col span={12}>
           <Card bordered={false}>
             <Statistic
-              title="Tidak Valid"
+              title="Potensial Tidak Valid"
               value={insight.jumlah_tidak_sama}
-              // precision={2}
               valueStyle={{ color: "#cf1322" }}
+              groupSeparator="."
               // prefix={<ArrowDownOutlined />}
               suffix="TPS"
             />
@@ -86,11 +86,16 @@ export default async function Page() {
             hasil penjumlahan suara dari ketiga paslon tidak sama. Misalnya,
             jika dijumlahkan hasil perolehan suara Paslon 01+02+03 adalah 300
             suara, tapi pada field Jumlah Suara Sah adalah 200, maka terdapat
-            selisih 100 data yang menyebabkan tidak valid.
+            selisih 100 data yang menyebabkan tidak valid. Berdasarkan data yang
+            kami dapatkan dari website KPU, terdapat{" "}
+            {insight.jumlah_tidak_sama.toLocaleString().replace(",", ".")} TPS
+            yang potensial datanya kurang valid.
           </Paragraph>
-          <Button size="large" type="primary" href="/error_1">
-            Cek Data Terbaru
-          </Button>
+          <Link href="/data-error-1">
+            <Button size="large" type="primary">
+              Cek Data Terbaru
+            </Button>
+          </Link>
           <Paragraph style={{ marginTop: "0.5rem", color: "GrayText" }}>
             Terakhir disingkronkan pada{" "}
             {dayjs(insight.last_update).format("HH:MM DD/MM/YYYY")}

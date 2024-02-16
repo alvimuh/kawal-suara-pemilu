@@ -48,7 +48,7 @@ export default function Layout({
         {children}
       </Content>
 
-      <Footer style={{ textAlign: "center" }}>
+      <Footer style={{ textAlign: "center", background: "white" }}>
         Alvilab ©{new Date().getFullYear()} Pemilu Damai
       </Footer>
     </LayoutAntd>

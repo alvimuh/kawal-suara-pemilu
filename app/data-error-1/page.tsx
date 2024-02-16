@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/client";
 import { Col, Flex, Row } from "antd";
-import MainTable from "./components/main_table";
-import Filter from "./components/filter";
+import MainTable from "./components/MainTable";
+import Filter from "./components/Filter";
 import Layout from "@/components/Layout";
 
 export const revalidate = 0;
@@ -36,6 +36,21 @@ export default async function Page({
     query.eq("kecamatan", searchParams.kecamatan);
   }
 
+  if (searchParams.status) {
+    switch (searchParams.status) {
+      case "valid":
+        query.filter("selisih_suara_paslon_dan_jumlah_sah", "eq", 0);
+        query.filter("total_votes", "not.eq", 0);
+        query.filter("total_sum_votes", "not.eq", 0);
+        break;
+      case "invalid":
+        query.filter("selisih_suara_paslon_dan_jumlah_sah", "not.eq", 0);
+        query.filter("total_votes", "not.eq", 0);
+        query.filter("total_sum_votes", "not.eq", 0);
+        break;
+    }
+  }
+
   const { data: tpsData, count } = await query.range(
     (page - 1) * pageSize,
     page * pageSize - 1
@@ -44,22 +59,29 @@ export default async function Page({
   let tpsDataList: TpsData[] = [];
 
   if (tpsData !== null && tpsData !== undefined) {
-    tpsDataList = tpsData.map((item: TpsData) => {
+    tpsDataList = tpsData.map((item) => {
+      let status = 0;
+      if (item.total_votes === 0 || item.total_sum_votes === 0) {
+        status = 1; // kosong
+      } else if (parseInt(item.selisih_suara_paslon_dan_jumlah_sah) !== 0) {
+        status = 2;
+      }
+
       return {
         ...item,
-        is_match: item.total_sum_votes === item.total_valid_votes,
+        status: status,
       };
     });
   }
 
   return (
     <Layout contentStyle={{ padding: 0 }}>
-      <Row style={{ padding: "12px 48px" }}>
+      <Row style={{ padding: "24px 48px" }}>
         <Col span={24}>
           <Filter />
         </Col>
       </Row>
-      <Row style={{ padding: "12px 48px" }}>
+      <Row>
         <Col span={24}>
           <MainTable data={tpsDataList} total={count ?? 0} />
         </Col>
