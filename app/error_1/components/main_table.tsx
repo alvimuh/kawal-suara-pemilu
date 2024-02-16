@@ -196,12 +196,15 @@ export default function MainTable({
     number | undefined
   >(undefined);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (pagination: TablePaginationConfig) => {
     if (pagination.current && pagination.pageSize) {
       const params = new URLSearchParams(searchParams.toString());
       params.set("page", pagination.current.toString());
       params.set("size", pagination.pageSize.toString());
       setCurrentPagination(pagination.current);
+      setIsLoading(true);
       replace(`${pathname}?${params.toString()}`);
     }
   };
@@ -213,6 +216,9 @@ export default function MainTable({
     }
   }, [searchParamsPage]);
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, [data]);
   return (
     <Table
       columns={columns}
@@ -225,6 +231,7 @@ export default function MainTable({
         current: currentPagination,
       }}
       onChange={handleChange}
+      loading={isLoading}
     />
   );
 }

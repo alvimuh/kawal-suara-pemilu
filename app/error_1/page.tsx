@@ -4,6 +4,7 @@ import Layout, { Content, Footer, Header } from "antd/es/layout/layout";
 import Title from "antd/es/typography/Title";
 import MainTable from "./components/main_table";
 import Filter from "./components/filter";
+import { useState } from "react";
 
 export const revalidate = 0;
 
@@ -52,31 +53,6 @@ export default async function Page({
       };
     });
   }
-
-  // const { data: provinceData } = await supabase.from("kpu_provinsi").select();
-
-  // let provinsiDataList: District[] = [];
-  // if (provinceData !== null && provinceData !== undefined) {
-  //   provinsiDataList = provinceData;
-  // }
-
-  // const kabupatenQuery = supabase.from("kpu_kecamatan").select();
-  // if (searchParams.provinsi) {
-  //   kabupatenQuery.eq("provinsi", searchParams.provinsi);
-  // }
-  // const { data: kabupatenData } = await kabupatenQuery;
-
-  // let kabupatenDataList: District[] = [];
-  // if (kabupatenData !== null && kabupatenData !== undefined) {
-  //   kabupatenDataList = kabupatenData;
-  // }
-
-  // const { data: kecamatanData } = await supabase.from("kpu_kecamatan").select();
-
-  // let kecamatanDataList: District[] = [];
-  // if (kecamatanData !== null && kecamatanData !== undefined) {
-  //   kecamatanDataList = kecamatanData;
-  // }
 
   return (
     <div>
