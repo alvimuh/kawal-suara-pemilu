@@ -97,15 +97,11 @@ export default async function Page({
           </Title>
         </Header>
         <Content>
-          {/* <Row style={{ padding: "28px 48px 12px 48px" }}>
+          <Row style={{ padding: "28px 48px 12px 48px" }}>
             <Flex>
-              <Filter
-                provinsiDataList={provinsiDataList}
-                kabupatenDataList={kabupatenDataList}
-                kecamatanDataList={kecamatanDataList}
-              />
+              <Filter />
             </Flex>
-          </Row> */}
+          </Row>
           <Row style={{ padding: "12px 48px" }}>
             <Col span={24}>
               <MainTable data={tpsDataList} />

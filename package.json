@@ -9,6 +9,8 @@
     "@ant-design/nextjs-registry": "^1.0.0",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "@tanstack/react-query": "^5.20.5",
+    "@tanstack/react-query-devtools": "^5.20.5",
     "antd": "^5.14.1",
     "autoprefixer": "10.4.17",
     "dayjs": "^1.11.10",

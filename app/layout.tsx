@@ -1,6 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { ReactQueryClientProvider } from "@/utils/reactquery/ReactQueryClientProvider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <main className="min-h-screen flex flex-col items-center">
-          <AntdRegistry>{children}</AntdRegistry>
+          <ReactQueryClientProvider>
+            <AntdRegistry>{children}</AntdRegistry>
+          </ReactQueryClientProvider>
         </main>
       </body>
     </html>

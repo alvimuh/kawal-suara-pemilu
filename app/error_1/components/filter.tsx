@@ -3,6 +3,8 @@
 import { District } from "@/lib/types";
 import { Select, Space } from "antd";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getKabupaten, getKecamatan, getProvinsi } from "../lib/fetch";
 
 type SelectName = "provinsi" | "kabupaten" | "kecamatan";
 
@@ -19,16 +21,12 @@ interface FilterProps {
   kecamatanDataList: District[];
   //   kelurahanDataList: District[];
 }
-function Filter({
-  provinsiDataList,
-  kabupatenDataList,
-  kecamatanDataList,
-}: //   kelurahanDataList,
-FilterProps) {
+
+function Filter() {
   const searchParams = useSearchParams();
-  const defaultProvinsi = searchParams.get("provinsi");
-  const defaultKabupaten = searchParams.get("kabupaten");
-  const defaultKecamatan = searchParams.get("kecamatan");
+  const provinsiParams = searchParams.get("provinsi");
+  const kabupatenParams = searchParams.get("kabupaten");
+  const kecamatanParams = searchParams.get("kecamatan");
   const { replace } = useRouter();
   const pathname = usePathname();
 
@@ -43,10 +41,38 @@ FilterProps) {
     replace(`${pathname}?${params.toString()}`);
   }
 
+  const provinsiQuery = useQuery({
+    queryKey: ["provinsi"],
+    queryFn: getProvinsi,
+    refetchOnWindowFocus: false,
+  });
+
+  const kabupatenQuery = useQuery({
+    queryKey: ["kabupaten", provinsiParams],
+    queryFn: () => getKabupaten(provinsiParams),
+    refetchOnWindowFocus: false,
+  });
+
+  const kecamatanQuery = useQuery({
+    queryKey: ["kecamatan", provinsiParams, kabupatenParams],
+    queryFn: () => getKecamatan(provinsiParams, kabupatenParams),
+    refetchOnWindowFocus: false,
+  });
+
+  const provinsiDataList: District[] = provinsiQuery.data
+    ? provinsiQuery.data.data
+    : [];
+  const kabupatenDataList: District[] = kabupatenQuery.data
+    ? kabupatenQuery.data.data
+    : [];
+  const kecamatanDataList: District[] = kecamatanQuery.data
+    ? kecamatanQuery.data.data
+    : [];
+
   return (
     <Space wrap>
       <Select
-        defaultValue={defaultProvinsi?.toUpperCase()}
+        defaultValue={provinsiParams?.toUpperCase()}
         placeholder="Pilih Provinsi"
         onChange={(value) => handleChange(value, "provinsi")}
         options={provinsiDataList.map((item: District) => ({
@@ -55,9 +81,10 @@ FilterProps) {
         }))}
         showSearch
         allowClear
+        loading={provinsiQuery.isLoading || provinsiQuery.isRefetching}
       />
       <Select
-        defaultValue={defaultKabupaten?.toUpperCase()}
+        defaultValue={kabupatenParams?.toUpperCase()}
         placeholder="Pilih Kabupaten"
         onChange={(value) => handleChange(value, "kabupaten")}
         options={kabupatenDataList.map((item) => ({
@@ -66,9 +93,10 @@ FilterProps) {
         }))}
         showSearch
         allowClear
+        loading={kabupatenQuery.isLoading || kabupatenQuery.isRefetching}
       />
       <Select
-        defaultValue={defaultKecamatan?.toUpperCase()}
+        defaultValue={kecamatanParams?.toUpperCase()}
         placeholder="Pilih Kecamatan"
         onChange={(value) => handleChange(value, "kecamatan")}
         options={kecamatanDataList.map((item) => ({
@@ -77,6 +105,7 @@ FilterProps) {
         }))}
         showSearch
         allowClear
+        loading={kecamatanQuery.isLoading || kecamatanQuery.isRefetching}
       />
     </Space>
   );
