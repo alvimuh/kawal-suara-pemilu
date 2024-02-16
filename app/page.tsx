@@ -1,4 +1,4 @@
-import { Insight } from "@/types/insight";
+import { Insight } from "@/lib/types";
 import { createClient } from "@/utils/supabase/client";
 import { Button, Col, Menu, Row, Statistic, Table, Tag, Tooltip } from "antd";
 import Card from "antd/es/card/Card";

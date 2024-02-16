@@ -182,6 +182,12 @@ const columns: ColumnsType<TpsData> = [
 
 export default function MainTable({ data }: { data: TpsData[] }) {
   return (
-    <Table columns={columns} dataSource={data} scroll={{ x: 1500 }} bordered />
+    <Table
+      columns={columns}
+      dataSource={data}
+      scroll={{ x: 1500 }}
+      bordered
+      rowKey="code"
+    />
   );
 }
