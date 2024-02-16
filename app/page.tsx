@@ -1,3 +1,4 @@
+import { Insight } from "@/types/insight";
 import { createClient } from "@/utils/supabase/client";
 import { Button, Col, Menu, Row, Statistic, Table, Tag, Tooltip } from "antd";
 import Card from "antd/es/card/Card";
@@ -7,20 +8,17 @@ import { ColumnsType } from "antd/es/table";
 import Link from "antd/es/typography/Link";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
+import dayjs from "dayjs";
 
-interface KpuTpsError_1 {
-  jumlah_sama: valueType;
-  jumlah_tidak_sama: valueType;
-}
+export const revalidate = 0;
 
 export default async function Page() {
   const supabase = createClient();
 
   const { data } = await supabase.from("kpu_tps_error_1").select();
 
-  const kpuTpsErrorData: KpuTpsError_1 = data !== null ? data[0] : null;
+  const insight: Insight = data !== null ? data[0] : null;
   // let dataArray: User[] = [];
-  console.log(kpuTpsErrorData);
 
   // if (data !== null && data !== undefined) {
   //   dataArray = data.map((item: User) => {
@@ -93,7 +91,7 @@ export default async function Page() {
               <Card bordered={false}>
                 <Statistic
                   title="Valid"
-                  value={kpuTpsErrorData.jumlah_sama}
+                  value={insight.jumlah_sama}
                   // precision={2}
                   valueStyle={{ color: "#3f8600" }}
                   // prefix={<ArrowUpOutlined />}
@@ -105,7 +103,7 @@ export default async function Page() {
               <Card bordered={false}>
                 <Statistic
                   title="Tidak Valid"
-                  value={kpuTpsErrorData.jumlah_tidak_sama}
+                  value={insight.jumlah_tidak_sama}
                   // precision={2}
                   valueStyle={{ color: "#cf1322" }}
                   // prefix={<ArrowDownOutlined />}
@@ -125,7 +123,8 @@ export default async function Page() {
                 Cek Data Terbaru
               </Button>
               <Paragraph style={{ marginTop: "0.5rem", color: "GrayText" }}>
-                Terakhir disingkronkan pada {new Date().toDateString()}
+                Terakhir disingkronkan pada{" "}
+                {dayjs(insight.last_update).format("HH:MM DD/MM/YYYY")}
               </Paragraph>
             </Col>
           </Row>
