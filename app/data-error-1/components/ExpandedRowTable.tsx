@@ -7,6 +7,7 @@ import {
   Descriptions,
   DescriptionsProps,
   Divider,
+  Flex,
   Image,
   Row,
   Space,
@@ -31,6 +32,28 @@ export default function ExpandedRowTable({ record }: { record: TpsData }) {
       children: record.total_votes_03,
     },
   ];
+  const descItems3: DescriptionsProps["items"] = [
+    {
+      key: "1",
+      label: "Jumlah pengguna hak pilih dalam DPT",
+      children: record.dpt,
+    },
+    {
+      key: "2",
+      label: "Jumlah pengguna hak pilih dalam DPTb",
+      children: record.dptb,
+    },
+    {
+      key: "3",
+      label: "Jumlah pengguna hak pilih dalam DPK",
+      children: record.dptk,
+    },
+    {
+      key: "4",
+      label: "Jumlah pengguna hak pilih",
+      children: record.jml_hak_pilih,
+    },
+  ];
   const descItems2: DescriptionsProps["items"] = [
     {
       key: "1",
@@ -44,31 +67,39 @@ export default function ExpandedRowTable({ record }: { record: TpsData }) {
     },
     {
       key: "3",
-      label: "Jumlah Seluruh Suara Sah Dan Suara Tidak Sah",
+      label: "Seluruh Suara Sah Dan Suara Tidak Sah",
       children: record.total_votes,
     },
   ];
 
   return (
     <Row gutter={[24, 24]} style={{ padding: 24 }}>
-      <Col>
+      <Col lg={14}>
         <Descriptions
           title="Total Perolehan Suara"
           items={descItems1}
-          column={1}
+          // column={1}
+          layout="vertical"
         />
         <Divider />
-        <Descriptions
-          title="Jumlah Suara Sah Dan Tidak Sah"
-          items={descItems2}
-          column={1}
-        />
+        <Flex gap={40}>
+          <Descriptions
+            title="Data Pengguna Hak Pilih"
+            items={descItems3}
+            column={1}
+          />
+          <Descriptions
+            title="Jumlah Suara Sah Dan Tidak Sah"
+            items={descItems2}
+            column={1}
+          />
+        </Flex>
       </Col>
-      <Col>
+      <Col lg={10}>
         <Title level={5}>Foto Hasil Pindai Dokumen</Title>
         <Space>
           {record.pic_urls.map((url) => (
-            <Image src={url} key={url} width={150} />
+            <Image src={url} key={url} />
           ))}
         </Space>
       </Col>

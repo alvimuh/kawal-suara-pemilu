@@ -136,7 +136,7 @@ const columns: ColumnsType<TpsData> = [
     key: "selisih_suara_paslon_dan_jumlah_sah",
     title: () => (
       <Tooltip
-        title="Dari web KPU pada section: Jumlah Suara Sah dan Tidak Sah"
+        title="Hasil selisih dari Jumlah Suara Seluruh Paslon dan Jumlah Suara Sah"
         placement="bottom"
       >
         Selisih
@@ -178,13 +178,13 @@ const columns: ColumnsType<TpsData> = [
   },
   {
     key: "link",
-    title: "Sumber",
+    title: "",
     dataIndex: "link",
     width: 120,
     render: (value) => {
       return (
         <Button type="default" href={value} size="small" target="_blank">
-          Buka
+          Laman KPU
         </Button>
       );
     },

@@ -30,7 +30,7 @@ function Filter() {
   const provinsiParams = searchParams.get("provinsi");
   const kabupatenParams = searchParams.get("kabupaten");
   const kecamatanParams = searchParams.get("kecamatan");
-  const statusParams = searchParams.get("status");
+  const statusParams = searchParams.get("status") ?? "all";
 
   const provinsiQuery = useQuery({
     queryKey: ["provinsi"],

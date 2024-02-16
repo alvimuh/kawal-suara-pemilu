@@ -175,7 +175,7 @@ export default async function Page() {
 
       <Paragraph style={{ marginTop: 32, marginBottom: 48 }}>
         Kami berharap data yang kami sajikan dapat membantu mengawal suara
-        pemilu khususnya pilpres kali ini ❤️
+        pemilu khususnya pilpres kali ini.
       </Paragraph>
       <Flex align="center">
         <Title
