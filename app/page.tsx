@@ -92,7 +92,7 @@ export default async function Page() {
           </Paragraph>
           <Paragraph>
             Sejauh ini, dari{" "}
-            {insight.jumlah_sama.toLocaleString().replace(",", ".")} TPS yang
+            {insight.jumlah_tps.toLocaleString().replace(",", ".")} TPS yang
             kami dapatkan, kami menemukan:
           </Paragraph>
         </Col>
@@ -118,7 +118,7 @@ export default async function Page() {
         <Col xs={24} sm={8}>
           <Card bordered={false}>
             <Statistic
-              title="Data Potensial Tidak Valid"
+              title="Data Berpotensi Tidak Valid"
               value={insight.jumlah_tidak_sama}
               valueStyle={{ color: "#cf1322" }}
               groupSeparator="."

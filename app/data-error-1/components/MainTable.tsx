@@ -160,7 +160,11 @@ const columns: ColumnsType<TpsData> = [
     width: 160,
     render: (value, record) => {
       const colorConvension = ["green", "yellow", "red"];
-      const titleConvension = ["Data Valid", "Kosong", "Potensial Tidak Valid"];
+      const titleConvension = [
+        "Data Valid",
+        "Kosong",
+        "Berpotensi Tidak Valid",
+      ];
       const descriptionConvension = [
         "Jumlah Surat Suara Sah dan Jumlah Suara Seluruh Paslon sama",
         "Data masih 0",
