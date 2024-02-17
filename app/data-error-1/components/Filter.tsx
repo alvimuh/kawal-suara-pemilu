@@ -109,9 +109,9 @@ function Filter() {
   };
 
   return (
-    <Flex className={styles.filter}>
-      <Row gutter={[12, 12]} style={{ flex: 1 }}>
-        <Col span={24}>
+    <>
+      <Row gutter={[12, 12]}>
+        <Col span={24} lg={3}>
           <Typography.Title
             level={5}
             style={{
@@ -120,10 +120,10 @@ function Filter() {
               fontWeight: 500,
             }}
           >
-            Lokasi TPS:
+            Lokasi TPS
           </Typography.Title>
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} lg={5}>
           <Select
             value={provinsiParams?.toUpperCase()}
             placeholder="Pilih Provinsi"
@@ -140,7 +140,7 @@ function Filter() {
             }}
           />
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} lg={5}>
           <Select
             value={kabupatenParams?.toUpperCase()}
             placeholder="Pilih Kabupaten"
@@ -157,7 +157,7 @@ function Filter() {
             }}
           />
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} lg={5}>
           <Select
             value={kecamatanParams?.toUpperCase()}
             placeholder="Pilih Kecamatan"
@@ -174,7 +174,7 @@ function Filter() {
             }}
           />
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} lg={5}>
           <Select
             value={kelurahanParams?.toUpperCase()}
             placeholder="Pilih Kelurahan"
@@ -192,8 +192,8 @@ function Filter() {
           />
         </Col>
       </Row>
-      <Row gutter={[12, 12]}>
-        <Col span={24}>
+      <Row gutter={[12, 12]} style={{ marginTop: 18 }}>
+        <Col xs={24} lg={3}>
           <Typography.Title
             level={5}
             style={{
@@ -202,10 +202,10 @@ function Filter() {
               fontWeight: 500,
             }}
           >
-            Status Data:
+            Status Data
           </Typography.Title>
         </Col>
-        <Col span={24}>
+        <Col span={24} lg={20}>
           <Radio.Group
             options={optionsWithDisabled}
             onChange={handleChangeStatus}
@@ -218,123 +218,7 @@ function Filter() {
           />
         </Col>
       </Row>
-    </Flex>
-  );
-  return (
-    <Row gutter={[48, 12]}>
-      <Col md={16}>
-        <Row gutter={[12, 12]}>
-          <Col span={24}>
-            <Typography.Title
-              level={5}
-              style={{
-                margin: 0,
-                lineHeight: "2.05rem",
-                fontWeight: 500,
-              }}
-            >
-              Lokasi TPS:
-            </Typography.Title>
-          </Col>
-          <Col xs={24} md={12}>
-            <Select
-              value={provinsiParams?.toUpperCase()}
-              placeholder="Pilih Provinsi"
-              onChange={(value) => handleChangeDistrict(value, "provinsi")}
-              options={provinsiDataList.map((item: District) => ({
-                label: item.provinsi,
-                value: item.provinsi,
-              }))}
-              showSearch
-              allowClear
-              loading={provinsiQuery.isLoading || provinsiQuery.isRefetching}
-              style={{
-                width: "100%",
-              }}
-            />
-          </Col>
-          <Col xs={24} md={12}>
-            <Select
-              value={kabupatenParams?.toUpperCase()}
-              placeholder="Pilih Kabupaten"
-              onChange={(value) => handleChangeDistrict(value, "kabupaten")}
-              options={kabupatenDataList.map((item) => ({
-                label: item.kabupaten,
-                value: item.kabupaten,
-              }))}
-              showSearch
-              allowClear
-              loading={kabupatenQuery.isLoading || kabupatenQuery.isRefetching}
-              style={{
-                width: "100%",
-              }}
-            />
-          </Col>
-          <Col xs={24} md={12}>
-            <Select
-              value={kecamatanParams?.toUpperCase()}
-              placeholder="Pilih Kecamatan"
-              onChange={(value) => handleChangeDistrict(value, "kecamatan")}
-              options={kecamatanDataList.map((item) => ({
-                label: item.kecamatan,
-                value: item.kecamatan,
-              }))}
-              showSearch
-              allowClear
-              loading={kecamatanQuery.isLoading || kecamatanQuery.isRefetching}
-              style={{
-                width: "100%",
-              }}
-            />
-          </Col>
-          <Col xs={24} md={12}>
-            <Select
-              value={kelurahanParams?.toUpperCase()}
-              placeholder="Pilih Kelurahan"
-              onChange={(value) => handleChangeDistrict(value, "kelurahan")}
-              options={kelurahanDataList.map((item) => ({
-                label: item.kelurahan,
-                value: item.kelurahan,
-              }))}
-              showSearch
-              allowClear
-              loading={kelurahanQuery.isLoading || kelurahanQuery.isRefetching}
-              style={{
-                width: "100%",
-              }}
-            />
-          </Col>
-        </Row>
-      </Col>
-      <Col>
-        <Row gutter={[12, 12]}>
-          <Col span={24}>
-            <Typography.Title
-              level={5}
-              style={{
-                margin: 0,
-                lineHeight: "2.05rem",
-                fontWeight: 500,
-              }}
-            >
-              Status Data:
-            </Typography.Title>
-          </Col>
-          <Col span={24}>
-            <Radio.Group
-              options={optionsWithDisabled}
-              onChange={handleChangeStatus}
-              defaultValue={statusParams}
-              style={{
-                display: "flex",
-                height: "100%",
-                alignItems: "center",
-              }}
-            />
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    </>
   );
 }
 
