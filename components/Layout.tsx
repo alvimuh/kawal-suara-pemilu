@@ -1,14 +1,14 @@
-import LayoutAntd, { Content, Footer } from "antd/es/layout/layout";
+import LayoutAntd, { Content } from "antd/es/layout/layout";
 import { Header } from "antd/es/layout/layout";
 import { RiBox1Line } from "react-icons/ri";
 
 import Title from "antd/es/typography/Title";
-import { Flex } from "antd";
+import { Flex, Typography } from "antd";
 import Link from "next/link";
 import Paragraph from "antd/es/typography/Paragraph";
 import { createClient } from "@/utils/supabase/client";
-import { Insight } from "@/lib/types";
 import dayjs from "dayjs";
+import { Footer } from "./Footer";
 
 export const revalidate = 0;
 
@@ -21,9 +21,11 @@ export default async function Layout({
 }) {
   const supabase = createClient();
 
-  const { data } = await supabase.from("kpu_tps_data_error_1").select();
+  const { data } = await supabase
+    .from("kpu_tps_data_error_1")
+    .select("last_update");
 
-  const insight: Insight = data !== null ? data[0] : null;
+  const lastUpdate: string = data !== null ? data[0].last_update : null;
 
   return (
     <LayoutAntd>
@@ -55,16 +57,8 @@ export default async function Layout({
           </Flex>
         </Link>
       </Header>
-
       <Content style={contentStyle}>{children}</Content>
-
-      <Footer style={{ textAlign: "center", background: "white" }}>
-        <Paragraph style={{ color: "GrayText" }}>
-          Terakhir disinkronkan pada{" "}
-          {dayjs(insight.last_update).format("HH:MM DD/MM/YYYY")}
-        </Paragraph>
-        Alvilab ©{new Date().getFullYear()} Pemilu Damai
-      </Footer>
+      <Footer lastUpdate={lastUpdate} />
     </LayoutAntd>
   );
 }
