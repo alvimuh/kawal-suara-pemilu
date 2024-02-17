@@ -1,6 +1,8 @@
 import { Insight } from "@/lib/types";
 import { createClient } from "@/utils/supabase/client";
 import { NextRequest } from "next/server";
+import prisma from "@/prisma/db";
+import json from "@/utils/json";
 
 export async function GET(request: NextRequest) {
   const searchParams = {
@@ -13,7 +15,7 @@ export async function GET(request: NextRequest) {
     status: request.nextUrl.searchParams.get("status"),
   };
 
-  const supabase = createClient();
+  // const supabase = createClient();
 
   let page = 1;
   let pageSize = 10;
@@ -26,56 +28,67 @@ export async function GET(request: NextRequest) {
     pageSize = parseInt(searchParams.size);
   }
 
-  let query = supabase.from("kpu_tps").select("*", { count: "exact" });
+  let where: {
+    provinsi?: string;
+    kabupaten?: string;
+    kecamatan?: string;
+    kelurahan?: string;
+  } = {};
 
   if (searchParams.provinsi) {
-    query.eq("provinsi", searchParams.provinsi);
+    where.provinsi = searchParams.provinsi;
   }
   if (searchParams.kabupaten) {
-    query.eq("kabupaten", searchParams.kabupaten);
+    where.kabupaten = searchParams.kabupaten;
   }
   if (searchParams.kecamatan) {
-    query.eq("kecamatan", searchParams.kecamatan);
+    where.kecamatan = searchParams.kecamatan;
   }
   if (searchParams.kelurahan) {
-    query.eq("kelurahan", searchParams.kelurahan);
+    where.kelurahan = searchParams.kelurahan;
   }
 
-  if (searchParams.status) {
-    switch (searchParams.status) {
-      case "valid":
-        query.filter("selisih_suara_paslon_dan_jumlah_sah", "eq", 0);
-        query.filter("total_votes", "not.eq", 0);
-        query.filter("total_sum_votes", "not.eq", 0);
-        break;
-      case "invalid":
-        query.filter("selisih_suara_paslon_dan_jumlah_sah", "not.eq", 0);
-        query.filter("total_votes", "not.eq", 0);
-        query.filter("total_sum_votes", "not.eq", 0);
-        break;
-    }
-  }
+  const tpsData = await prisma.kpu_tps.findMany({
+    where,
+    orderBy: { code: "asc" },
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
 
-  const { data: tpsData, count } = await query
-    .order("code")
-    .range((page - 1) * pageSize, page * pageSize - 1);
+  const count = await prisma.kpu_tps.count({ where });
 
-  let tpsDataList: TpsData[] = [];
+  // if (searchParams.status) {
+  //   switch (searchParams.status) {
+  //     case "valid":
+  //       query.filter("selisih_suara_paslon_dan_jumlah_sah", "eq", 0);
+  //       query.filter("total_votes", "not.eq", 0);
+  //       query.filter("total_sum_votes", "not.eq", 0);
+  //       break;
+  //     case "invalid":
+  //       query.filter("selisih_suara_paslon_dan_jumlah_sah", "not.eq", 0);
+  //       query.filter("total_votes", "not.eq", 0);
+  //       query.filter("total_sum_votes", "not.eq", 0);
+  //       break;
+  //   }
+  // }
 
-  if (tpsData !== null && tpsData !== undefined) {
-    tpsDataList = tpsData.map((item) => {
-      let status = 0;
-      if (item.total_votes === 0 || item.total_sum_votes === 0) {
-        status = 1; // kosong
-      } else if (parseInt(item.selisih_suara_paslon_dan_jumlah_sah) !== 0) {
-        status = 2;
-      }
+  // let tpsDataList: TpsData[] = [];
 
-      return {
-        ...item,
-        status: status,
-      };
-    });
-  }
-  return Response.json({ data: tpsDataList, count });
+  // if (tpsData !== null && tpsData !== undefined) {
+  //   tpsDataList = tpsData.map((item) => {
+  //     let status = 0;
+  //     if (item.total_votes === 0 || item.total_sum_votes === 0) {
+  //       status = 1; // kosong
+  //     } else if (parseInt(item.selisih_suara_paslon_dan_jumlah_sah) !== 0) {
+  //       status = 2;
+  //     }
+
+  //     return {
+  //       ...item,
+  //       status: status,
+  //     };
+  //   });
+  // }
+
+  return Response.json({ data: json(tpsData), count });
 }

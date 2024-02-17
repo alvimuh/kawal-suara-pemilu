@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model contains an index with non-default null sort order and requires additional setup for migrations. Visit https://pris.ly/d/default-index-null-ordering for more info.
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+model kpu_tps {
+  code                                  String   @id @db.VarChar(15)
+  provinsi                              String?  @db.VarChar(100)
+  kabupaten                             String?  @db.VarChar(100)
+  kecamatan                             String?  @db.VarChar(100)
+  kelurahan                             String?  @db.VarChar(100)
+  tps                                   String?  @db.VarChar(100)
+  total_votes_01                        BigInt?
+  total_votes_02                        BigInt?
+  total_votes_03                        BigInt?
+  total_sum_votes                       BigInt?
+  total_valid_votes                     BigInt?
+  total_invalid_votes                   BigInt?
+  total_votes                           BigInt?
+  dpt                                   BigInt?
+  dptb                                  BigInt?
+  dptk                                  BigInt?
+  jml_hak_pilih                         BigInt?
+  selisih_suara_paslon_dan_jumlah_sah   BigInt?
+  selisih_suara_sah_tidak_sah_dan_total BigInt?
+  link                                  String?  @db.VarChar(100)
+  pic_urls                              String[] @db.VarChar
+  updated_at                            BigInt?
+  obtained_at                           BigInt?
+  update_id                             BigInt?
+  all_in                                Int?     @db.SmallInt
+
+  @@index([all_in], map: "idx_all_in")
+  @@index([provinsi, kabupaten, kecamatan, kelurahan], map: "idx_filter")
+  @@index([selisih_suara_paslon_dan_jumlah_sah(sort: Desc)], map: "idx_selisih_suara_paslon_dan_jumlah_sah")
+  @@index([selisih_suara_sah_tidak_sah_dan_total(sort: Desc)], map: "idx_selisih_suara_sah_tidak_sah_dan_total")
+  @@index([updated_at(sort: Desc)], map: "idx_updated_at")
+}
+
+model kpu_tps_histogram {
+  id            Int      @id @default(autoincrement())
+  ts            DateTime @db.Timestamp(6)
+  raw_data      Json?    @db.Json
+  not_null_data Json?    @db.Json
+  clear_data    Json?    @db.Json
+  all_in_data   Json?    @db.Json
+  ts_unix       BigInt?
+
+  @@index([ts(sort: Desc)], map: "idx_ts")
+}
+
+model kpu_tps_stats {
+  id                   Int     @id @default(autoincrement())
+  created_at           BigInt?
+  total_record         BigInt?
+  progress             Float?
+  estimate_time        BigInt?
+  last_progress_update BigInt?
+  processing_time      BigInt?
+  finished_at          BigInt?
+  contributor          String? @db.VarChar(128)
+}
+
+model kpu_web_stats {
+  id          Int     @id(map: "kpu_web_stast_pkey") @default(autoincrement())
+  upload_id   Int
+  memory_info Json?   @db.Json
+  rps         Float
+  est         BigInt
+  percentage  Float?
+  ts          BigInt?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model map_loc {
+  nid        Int?
+  parent_nid Int?
+  name       String?
+  serial     Int?
+  type       Int?
+  latitude   Decimal? @db.Decimal
+  longitude  Decimal? @db.Decimal
+  status     Int?
+
+  @@ignore
+}
