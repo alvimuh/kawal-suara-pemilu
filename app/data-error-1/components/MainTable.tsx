@@ -1,12 +1,14 @@
 "use client";
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { Button, Table, Tag, Tooltip } from "antd";
+import { Button, Grid, Table, Tag, Tooltip } from "antd";
 import { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { useEffect, useState } from "react";
 import ExpandedRowTable from "./ExpandedRowTable";
 
-const columns: ColumnsType<TpsData> = [
+const columns: (isMobile: boolean) => ColumnsType<TpsData> = (
+  isMobile: boolean
+) => [
   {
     key: "code",
     title: () => (
@@ -67,45 +69,6 @@ const columns: ColumnsType<TpsData> = [
     dataIndex: "tps",
     width: 140,
   },
-  // {
-  //   key: "total_votes_01",
-  //   title: () => (
-  //     <Tooltip
-  //       title="Dari web KPU pada section: Perolehan Suara"
-  //       placement="bottom"
-  //     >
-  //       Jumlah Suara Paslon 01
-  //     </Tooltip>
-  //   ),
-  //   dataIndex: "total_votes_01",
-  //   width: 110,
-  // },
-  // {
-  //   key: "total_votes_02",
-  //   title: () => (
-  //     <Tooltip
-  //       title="Dari web KPU pada section: Perolehan Suara"
-  //       placement="bottom"
-  //     >
-  //       Jumlah Suara Paslon 02
-  //     </Tooltip>
-  //   ),
-  //   dataIndex: "total_votes_02",
-  //   width: 110,
-  // },
-  // {
-  //   key: "total_votes_03",
-  //   title: () => (
-  //     <Tooltip
-  //       title="Dari web KPU pada section: Perolehan Suara"
-  //       placement="bottom"
-  //     >
-  //       Jumlah Suara Paslon 03
-  //     </Tooltip>
-  //   ),
-  //   dataIndex: "total_votes_03",
-  //   width: 110,
-  // },
   {
     key: "total_sum_votes",
     title: () => (
@@ -156,7 +119,8 @@ const columns: ColumnsType<TpsData> = [
       </Tooltip>
     ),
     dataIndex: "status",
-    fixed: "right",
+    fixed: !isMobile ? "right" : undefined,
+    width: 178,
     render: (value, record) => {
       const colorConvension = ["green", "yellow", "red"];
       const titleConvension = [
@@ -201,6 +165,7 @@ export default function MainTable({
   data: TpsData[];
   total: number;
 }) {
+  const breakpoint = Grid.useBreakpoint();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -231,9 +196,11 @@ export default function MainTable({
   useEffect(() => {
     setIsLoading(false);
   }, [data]);
+
+  const colomns = columns(!breakpoint.md);
   return (
     <Table
-      columns={columns}
+      columns={colomns}
       dataSource={data}
       scroll={{ x: 1500 }}
       bordered
