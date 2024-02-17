@@ -239,7 +239,7 @@ export default async function Page() {
 
         <Flex vertical style={{ marginTop: "8rem" }}>
           <Paragraph
-            style={{ marginBottom: 48, color: "GrayText", maxWidth: "400px" }}
+            style={{ marginBottom: 48, color: "black", maxWidth: "400px" }}
           >
             "Kami berharap data yang kami sajikan dapat membantu bagi yang
             sedang mengawal suara pemilu khususnya pilpres kali ini, dan menjadi
