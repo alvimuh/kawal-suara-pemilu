@@ -243,7 +243,7 @@ export default async function Page() {
           >
             "Kami berharap data yang kami sajikan dapat membantu bagi yang
             sedang mengawal suara pemilu khususnya pilpres kali ini, dan menjadi
-            masukan bagi KPU dalam penyelanggaraan pemilu saat ini da yang akand
+            masukan bagi KPU dalam penyelanggaraan pemilu saat ini da yang akan
             datang."
           </Paragraph>
           <Flex align="center">

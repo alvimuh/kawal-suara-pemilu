@@ -60,7 +60,7 @@ export default async function Layout({
 
       <Footer style={{ textAlign: "center", background: "white" }}>
         <Paragraph style={{ color: "GrayText" }}>
-          Terakhir disingkronkan pada{" "}
+          Terakhir disinkronkan pada{" "}
           {dayjs(insight.last_update).format("HH:MM DD/MM/YYYY")}
         </Paragraph>
         Alvilab ©{new Date().getFullYear()} Pemilu Damai
