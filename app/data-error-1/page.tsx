@@ -51,10 +51,9 @@ export default async function Page({
     }
   }
 
-  const { data: tpsData, count } = await query.range(
-    (page - 1) * pageSize,
-    page * pageSize - 1
-  );
+  const { data: tpsData, count } = await query
+    .order("code")
+    .range((page - 1) * pageSize, page * pageSize - 1);
 
   let tpsDataList: TpsData[] = [];
 
