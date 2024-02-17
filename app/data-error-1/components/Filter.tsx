@@ -1,16 +1,7 @@
 "use client";
 
 import { District } from "@/lib/types";
-import {
-  Col,
-  Flex,
-  Radio,
-  RadioChangeEvent,
-  Row,
-  Select,
-  Typography,
-  Grid,
-} from "antd";
+import { Col, Radio, RadioChangeEvent, Row, Select, Typography } from "antd";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -19,8 +10,7 @@ import {
   getKelurahan,
   getProvinsi,
 } from "../lib/fetch";
-
-const { useBreakpoint } = Grid;
+import { useState } from "react";
 
 type SelectName = "provinsi" | "kabupaten" | "kecamatan" | "kelurahan";
 
@@ -31,16 +21,17 @@ const optionsWithDisabled = [
 ];
 
 function Filter() {
-  const breakpoint = useBreakpoint();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const provinsiParams = searchParams.get("provinsi");
-  const kabupatenParams = searchParams.get("kabupaten");
-  const kecamatanParams = searchParams.get("kecamatan");
-  const kelurahanParams = searchParams.get("kelurahan");
-  const statusParams = searchParams.get("status") ?? "all";
+  const [formData, setFormData] = useState({
+    provinsi: searchParams.get("provinsi"),
+    kabupaten: searchParams.get("kabupaten"),
+    kecamatan: searchParams.get("kecamatan"),
+    kelurahan: searchParams.get("kelurahan"),
+    status: searchParams.get("status") ?? "all",
+  });
 
   const provinsiQuery = useQuery({
     queryKey: ["provinsi"],
@@ -49,21 +40,26 @@ function Filter() {
   });
 
   const kabupatenQuery = useQuery({
-    queryKey: ["kabupaten", provinsiParams],
-    queryFn: () => getKabupaten(provinsiParams),
+    queryKey: ["kabupaten", formData.provinsi],
+    queryFn: () => getKabupaten(formData.provinsi),
     refetchOnWindowFocus: false,
   });
 
   const kecamatanQuery = useQuery({
-    queryKey: ["kecamatan", provinsiParams, kabupatenParams],
-    queryFn: () => getKecamatan(provinsiParams, kabupatenParams),
+    queryKey: ["kecamatan", formData.provinsi, formData.kabupaten],
+    queryFn: () => getKecamatan(formData.provinsi, formData.kabupaten),
     refetchOnWindowFocus: false,
   });
 
   const kelurahanQuery = useQuery({
-    queryKey: ["kelurahan", provinsiParams, kabupatenParams, kecamatanParams],
+    queryKey: [
+      "kelurahan",
+      formData.provinsi,
+      formData.kabupaten,
+      formData.kecamatan,
+    ],
     queryFn: () =>
-      getKelurahan(provinsiParams, kabupatenParams, kecamatanParams),
+      getKelurahan(formData.provinsi, formData.kabupaten, formData.kecamatan),
     refetchOnWindowFocus: false,
   });
 
@@ -86,24 +82,58 @@ function Filter() {
     params.set("page", "1");
 
     if (name === "provinsi" && value === undefined) {
+      setFormData((prevState) => ({
+        ...prevState,
+        provinsi: value,
+        kabupaten: null,
+        kecamatan: null,
+        kelurahan: null,
+      }));
+
       params.delete("provinsi");
       params.delete("kabupaten");
       params.delete("kecamatan");
       params.delete("kelurahan");
     }
+
     if (name === "kabupaten" && value === undefined) {
+      setFormData((prevState) => ({
+        ...prevState,
+        kabupaten: value,
+        kecamatan: null,
+        kelurahan: null,
+      }));
+
       params.delete("kabupaten");
       params.delete("kecamatan");
       params.delete("kelurahan");
     }
+
     if (name === "kecamatan" && value === undefined) {
+      setFormData((prevState) => ({
+        ...prevState,
+        kecamatan: value,
+        kelurahan: null,
+      }));
+
       params.delete("kecamatan");
       params.delete("kelurahan");
     }
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
     replace(`${pathname}?${params.toString()}`);
   };
 
   const handleChangeStatus = (event: RadioChangeEvent) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      status: event.target.value,
+    }));
+
     const params = new URLSearchParams(searchParams.toString());
     params.set("status", event.target.value);
 
@@ -127,7 +157,7 @@ function Filter() {
         </Col>
         <Col xs={24} lg={5}>
           <Select
-            value={provinsiParams?.toUpperCase()}
+            value={formData.provinsi?.toUpperCase()}
             placeholder="Pilih Provinsi"
             onChange={(value) => handleChangeDistrict(value, "provinsi")}
             options={provinsiDataList.map((item: District) => ({
@@ -144,7 +174,7 @@ function Filter() {
         </Col>
         <Col xs={24} lg={5}>
           <Select
-            value={kabupatenParams?.toUpperCase()}
+            value={formData.kabupaten?.toUpperCase()}
             placeholder="Pilih Kabupaten"
             onChange={(value) => handleChangeDistrict(value, "kabupaten")}
             options={kabupatenDataList.map((item) => ({
@@ -161,7 +191,7 @@ function Filter() {
         </Col>
         <Col xs={24} lg={5}>
           <Select
-            value={kecamatanParams?.toUpperCase()}
+            value={formData.kecamatan?.toUpperCase()}
             placeholder="Pilih Kecamatan"
             onChange={(value) => handleChangeDistrict(value, "kecamatan")}
             options={kecamatanDataList.map((item) => ({
@@ -178,7 +208,7 @@ function Filter() {
         </Col>
         <Col xs={24} lg={5}>
           <Select
-            value={kelurahanParams?.toUpperCase()}
+            value={formData.kelurahan?.toUpperCase()}
             placeholder="Pilih Kelurahan"
             onChange={(value) => handleChangeDistrict(value, "kelurahan")}
             options={kelurahanDataList.map((item) => ({
@@ -211,7 +241,7 @@ function Filter() {
           <Radio.Group
             options={optionsWithDisabled}
             onChange={handleChangeStatus}
-            defaultValue={statusParams}
+            value={formData.status}
             style={{
               display: "flex",
               height: "100%",
