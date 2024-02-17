@@ -10,8 +10,6 @@ import { createClient } from "@/utils/supabase/client";
 import dayjs from "dayjs";
 import { Footer } from "./Footer";
 
-export const revalidate = 0;
-
 export default async function Layout({
   children,
   contentStyle,
