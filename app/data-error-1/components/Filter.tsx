@@ -19,7 +19,6 @@ import {
   getKelurahan,
   getProvinsi,
 } from "../lib/fetch";
-import styles from "./styles.module.css";
 
 const { useBreakpoint } = Grid;
 
@@ -90,13 +89,16 @@ function Filter() {
       params.delete("provinsi");
       params.delete("kabupaten");
       params.delete("kecamatan");
+      params.delete("kelurahan");
     }
     if (name === "kabupaten" && value === undefined) {
       params.delete("kabupaten");
       params.delete("kecamatan");
+      params.delete("kelurahan");
     }
     if (name === "kecamatan" && value === undefined) {
       params.delete("kecamatan");
+      params.delete("kelurahan");
     }
     replace(`${pathname}?${params.toString()}`);
   };
