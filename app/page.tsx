@@ -7,7 +7,7 @@ import Card from "antd/es/card/Card";
 import Link from "antd/es/typography/Link";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
-import Image from "next/image";
+
 import {
   MdOutlineDataExploration,
   MdOutlineRunningWithErrors,
@@ -65,16 +65,15 @@ export default async function Page() {
           style={{
             marginBottom: "-5rem",
             padding: "0 2rem",
+            width: "80%",
           }}
         >
-          <Image
+          <img
             src="/screenshot.png"
             alt="Website Kawal Suara Pemilu"
-            width={1920}
-            height={1180}
-            layout="responsive"
             style={{
               borderRadius: 4,
+              width: "100%",
             }}
           />
         </div>
