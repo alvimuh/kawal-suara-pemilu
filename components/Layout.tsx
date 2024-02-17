@@ -56,9 +56,7 @@ export default async function Layout({
         </Link>
       </Header>
 
-      <Content style={{ padding: "32px 48px", ...contentStyle }}>
-        {children}
-      </Content>
+      <Content style={contentStyle}>{children}</Content>
 
       <Footer style={{ textAlign: "center", background: "white" }}>
         <Paragraph style={{ color: "GrayText" }}>
