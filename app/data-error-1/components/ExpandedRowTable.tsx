@@ -146,8 +146,21 @@ export default function ExpandedRowTable({ record }: { record: TpsData }) {
   return (
     <Row gutter={[24, 24]} style={{ padding: 24 }}>
       <Col span={24}>
+        <Title level={4}>
+          {record.tps},{" "}
+          <span
+            style={{
+              textTransform: "capitalize",
+            }}
+          >
+            {record.kelurahan.toLowerCase()}, {record.kecamatan.toLowerCase()},{" "}
+            {record.kabupaten.toLowerCase()}, {record.provinsi.toLowerCase()}
+          </span>
+        </Title>
+      </Col>
+      <Col span={24}>
         <Descriptions
-          title="Total Perolehan Suaras"
+          title="Total Perolehan Suara"
           items={descItems1}
           column={3}
           layout="vertical"
