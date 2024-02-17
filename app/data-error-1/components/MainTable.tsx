@@ -157,17 +157,16 @@ const columns: ColumnsType<TpsData> = [
     ),
     dataIndex: "status",
     fixed: "right",
-    width: 160,
     render: (value, record) => {
       const colorConvension = ["green", "yellow", "red"];
       const titleConvension = [
         "Data Valid",
-        "Kosong",
+        "Belum lengkap",
         "Berpotensi Tidak Valid",
       ];
       const descriptionConvension = [
         "Jumlah Surat Suara Sah dan Jumlah Suara Seluruh Paslon sama",
-        "Data masih 0",
+        "Data masih diproses di web KPU",
         `Jumlah Surat Suara Sah adalah ${record.total_valid_votes} sedangkan Jumlah Suara Seluruh Paslon adalah ${record.total_sum_votes}`,
       ];
 
