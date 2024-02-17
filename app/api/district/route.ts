@@ -10,6 +10,7 @@ export async function GET(request: NextRequest) {
   let data: District[] = [];
   const provinsi = request.nextUrl.searchParams.get("provinsi");
   const kabupaten = request.nextUrl.searchParams.get("kabupaten");
+  const kecamatan = request.nextUrl.searchParams.get("kecamatan");
 
   switch (request.nextUrl.searchParams.get("type")) {
     case "provinsi":
@@ -42,6 +43,19 @@ export async function GET(request: NextRequest) {
 
       if (kecamatanData !== null && kecamatanData !== undefined) {
         data = kecamatanData;
+      }
+      break;
+
+    case "kelurahan":
+      const kelurahanQuery = supabase.from("kpu_kelurahan").select();
+      kelurahanQuery.eq("provinsi", provinsi);
+      kelurahanQuery.eq("kabupaten", kabupaten);
+      kelurahanQuery.eq("kecamatan", kecamatan);
+
+      const { data: kelurahanData } = await kelurahanQuery;
+
+      if (kelurahanData !== null && kelurahanData !== undefined) {
+        data = kelurahanData;
       }
       break;
   }

@@ -1,0 +1,14 @@
+.filter{
+    display:flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+    .filter{
+        flex-direction: row;
+        align-items: start;
+        gap: 3rem;
+    }
+}

@@ -3,18 +3,27 @@
 import { District } from "@/lib/types";
 import {
   Col,
+  Flex,
   Radio,
   RadioChangeEvent,
   Row,
   Select,
-  Space,
   Typography,
+  Grid,
 } from "antd";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getKabupaten, getKecamatan, getProvinsi } from "../lib/fetch";
+import {
+  getKabupaten,
+  getKecamatan,
+  getKelurahan,
+  getProvinsi,
+} from "../lib/fetch";
+import styles from "./styles.module.css";
 
-type SelectName = "provinsi" | "kabupaten" | "kecamatan";
+const { useBreakpoint } = Grid;
+
+type SelectName = "provinsi" | "kabupaten" | "kecamatan" | "kelurahan";
 
 const optionsWithDisabled = [
   { label: "Semua", value: "all" },
@@ -23,6 +32,7 @@ const optionsWithDisabled = [
 ];
 
 function Filter() {
+  const breakpoint = useBreakpoint();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -30,6 +40,7 @@ function Filter() {
   const provinsiParams = searchParams.get("provinsi");
   const kabupatenParams = searchParams.get("kabupaten");
   const kecamatanParams = searchParams.get("kecamatan");
+  const kelurahanParams = searchParams.get("kelurahan");
   const statusParams = searchParams.get("status") ?? "all";
 
   const provinsiQuery = useQuery({
@@ -50,6 +61,13 @@ function Filter() {
     refetchOnWindowFocus: false,
   });
 
+  const kelurahanQuery = useQuery({
+    queryKey: ["kelurahan", provinsiParams, kabupatenParams, kecamatanParams],
+    queryFn: () =>
+      getKelurahan(provinsiParams, kabupatenParams, kecamatanParams),
+    refetchOnWindowFocus: false,
+  });
+
   const provinsiDataList: District[] = provinsiQuery.data
     ? provinsiQuery.data.data
     : [];
@@ -58,6 +76,9 @@ function Filter() {
     : [];
   const kecamatanDataList: District[] = kecamatanQuery.data
     ? kecamatanQuery.data.data
+    : [];
+  const kelurahanDataList: District[] = kelurahanQuery.data
+    ? kelurahanQuery.data.data
     : [];
 
   const handleChangeDistrict = (value: string, name: SelectName) => {
@@ -88,9 +109,9 @@ function Filter() {
   };
 
   return (
-    <>
-      <Row gutter={[12, 12]}>
-        <Col sm={24} lg={4} xl={2}>
+    <Flex className={styles.filter}>
+      <Row gutter={[12, 12]} style={{ flex: 1 }}>
+        <Col span={24}>
           <Typography.Title
             level={5}
             style={{
@@ -102,7 +123,7 @@ function Filter() {
             Lokasi TPS:
           </Typography.Title>
         </Col>
-        <Col xs={24} md={8} lg={4}>
+        <Col xs={24} md={12}>
           <Select
             value={provinsiParams?.toUpperCase()}
             placeholder="Pilih Provinsi"
@@ -119,7 +140,7 @@ function Filter() {
             }}
           />
         </Col>
-        <Col xs={24} md={8} lg={4}>
+        <Col xs={24} md={12}>
           <Select
             value={kabupatenParams?.toUpperCase()}
             placeholder="Pilih Kabupaten"
@@ -136,7 +157,7 @@ function Filter() {
             }}
           />
         </Col>
-        <Col span={24} md={8} lg={4}>
+        <Col xs={24} md={12}>
           <Select
             value={kecamatanParams?.toUpperCase()}
             placeholder="Pilih Kecamatan"
@@ -153,8 +174,26 @@ function Filter() {
             }}
           />
         </Col>
-        <Col xs={24} lg={6} xl={2}></Col>
-        <Col sm={24} lg={4} xl={2}>
+        <Col xs={24} md={12}>
+          <Select
+            value={kelurahanParams?.toUpperCase()}
+            placeholder="Pilih Kelurahan"
+            onChange={(value) => handleChangeDistrict(value, "kelurahan")}
+            options={kelurahanDataList.map((item) => ({
+              label: item.kelurahan,
+              value: item.kelurahan,
+            }))}
+            showSearch
+            allowClear
+            loading={kelurahanQuery.isLoading || kelurahanQuery.isRefetching}
+            style={{
+              width: "100%",
+            }}
+          />
+        </Col>
+      </Row>
+      <Row gutter={[12, 12]}>
+        <Col span={24}>
           <Typography.Title
             level={5}
             style={{
@@ -166,7 +205,7 @@ function Filter() {
             Status Data:
           </Typography.Title>
         </Col>
-        <Col xs={24} sm={20} xl={6}>
+        <Col span={24}>
           <Radio.Group
             options={optionsWithDisabled}
             onChange={handleChangeStatus}
@@ -179,7 +218,123 @@ function Filter() {
           />
         </Col>
       </Row>
-    </>
+    </Flex>
+  );
+  return (
+    <Row gutter={[48, 12]}>
+      <Col md={16}>
+        <Row gutter={[12, 12]}>
+          <Col span={24}>
+            <Typography.Title
+              level={5}
+              style={{
+                margin: 0,
+                lineHeight: "2.05rem",
+                fontWeight: 500,
+              }}
+            >
+              Lokasi TPS:
+            </Typography.Title>
+          </Col>
+          <Col xs={24} md={12}>
+            <Select
+              value={provinsiParams?.toUpperCase()}
+              placeholder="Pilih Provinsi"
+              onChange={(value) => handleChangeDistrict(value, "provinsi")}
+              options={provinsiDataList.map((item: District) => ({
+                label: item.provinsi,
+                value: item.provinsi,
+              }))}
+              showSearch
+              allowClear
+              loading={provinsiQuery.isLoading || provinsiQuery.isRefetching}
+              style={{
+                width: "100%",
+              }}
+            />
+          </Col>
+          <Col xs={24} md={12}>
+            <Select
+              value={kabupatenParams?.toUpperCase()}
+              placeholder="Pilih Kabupaten"
+              onChange={(value) => handleChangeDistrict(value, "kabupaten")}
+              options={kabupatenDataList.map((item) => ({
+                label: item.kabupaten,
+                value: item.kabupaten,
+              }))}
+              showSearch
+              allowClear
+              loading={kabupatenQuery.isLoading || kabupatenQuery.isRefetching}
+              style={{
+                width: "100%",
+              }}
+            />
+          </Col>
+          <Col xs={24} md={12}>
+            <Select
+              value={kecamatanParams?.toUpperCase()}
+              placeholder="Pilih Kecamatan"
+              onChange={(value) => handleChangeDistrict(value, "kecamatan")}
+              options={kecamatanDataList.map((item) => ({
+                label: item.kecamatan,
+                value: item.kecamatan,
+              }))}
+              showSearch
+              allowClear
+              loading={kecamatanQuery.isLoading || kecamatanQuery.isRefetching}
+              style={{
+                width: "100%",
+              }}
+            />
+          </Col>
+          <Col xs={24} md={12}>
+            <Select
+              value={kelurahanParams?.toUpperCase()}
+              placeholder="Pilih Kelurahan"
+              onChange={(value) => handleChangeDistrict(value, "kelurahan")}
+              options={kelurahanDataList.map((item) => ({
+                label: item.kelurahan,
+                value: item.kelurahan,
+              }))}
+              showSearch
+              allowClear
+              loading={kelurahanQuery.isLoading || kelurahanQuery.isRefetching}
+              style={{
+                width: "100%",
+              }}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col>
+        <Row gutter={[12, 12]}>
+          <Col span={24}>
+            <Typography.Title
+              level={5}
+              style={{
+                margin: 0,
+                lineHeight: "2.05rem",
+                fontWeight: 500,
+              }}
+            >
+              Status Data:
+            </Typography.Title>
+          </Col>
+          <Col span={24}>
+            <Radio.Group
+              options={optionsWithDisabled}
+              onChange={handleChangeStatus}
+              defaultValue={statusParams}
+              style={{
+                display: "flex",
+                height: "100%",
+                alignItems: "center",
+              }}
+            />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 }
 

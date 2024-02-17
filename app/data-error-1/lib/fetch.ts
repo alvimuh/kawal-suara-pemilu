@@ -29,3 +29,21 @@ export async function getKecamatan(
   }
   return null;
 }
+
+export async function getKelurahan(
+  provinsi: string | null,
+  kabupaten: string | null,
+  kecamatan: string | null
+) {
+  if (provinsi !== null && kabupaten !== null && kecamatan !== null) {
+    const params = new URLSearchParams({
+      type: "kelurahan",
+      provinsi: provinsi,
+      kabupaten: kabupaten,
+      kecamatan: kecamatan,
+    });
+
+    return (await fetch(`/api/district?${params.toString()}`)).json();
+  }
+  return null;
+}

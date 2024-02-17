@@ -35,6 +35,9 @@ export default async function Page({
   if (searchParams.kecamatan) {
     query.eq("kecamatan", searchParams.kecamatan);
   }
+  if (searchParams.kelurahan) {
+    query.eq("kelurahan", searchParams.kelurahan);
+  }
 
   if (searchParams.status) {
     switch (searchParams.status) {
