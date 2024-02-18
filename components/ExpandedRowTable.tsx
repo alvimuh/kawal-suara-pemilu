@@ -1,6 +1,4 @@
 "use client";
-
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import {
   Grid,
   Col,
@@ -15,6 +13,7 @@ import {
 } from "antd";
 import Title from "antd/es/typography/Title";
 import dayjs from "dayjs";
+import { fromUnixTime, format } from "date-fns";
 
 const { useBreakpoint } = Grid;
 
@@ -80,11 +79,6 @@ export default function ExpandedRowTable({ record }: { record: TpsData }) {
   const descItems4: DescriptionsProps["items"] = [
     {
       key: "1",
-      label: "Update terakhir di Web KPU",
-      children: dayjs(record.updated_at).format("DD/MM/YYYY HH:MM"),
-    },
-    {
-      key: "2",
       label: "Terakhir di-scraping ke database web ini",
       children: dayjs(record.obtained_at).format("DD/MM/YYYY HH:MM"),
     },
