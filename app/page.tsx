@@ -71,8 +71,8 @@ export default async function Page() {
             marginBottom: "3rem",
           }}
         >
-          Analisa sederhana hasil perhitungan suara pemilu, data didapatkan
-          langsung dari web KPU.
+          Analisa Sederhana Hasil Perhitungan Real Count Pemilihan Presiden
+          2024. Data Didapatkan Langsung Dari Web KPU
         </Paragraph>
         <div
           style={{
@@ -332,6 +332,18 @@ export default async function Page() {
               }}
             ></Iframe>
           </Col>
+        </Row>
+        <Row>
+          <Paragraph
+            style={{ fontSize: "1rem", marginTop: "2rem", color: "GrayText" }}
+          >
+            <span style={{ marginRight: 12 }}>
+              Anda juga dapat membuka dashboard yang lebih lengkap di
+            </span>
+            <Button href="https://kawalrealcount.isnan.me" target="_blank">
+              kawalrealcount.isnan.me
+            </Button>
+          </Paragraph>
         </Row>
 
         <Flex vertical style={{ marginTop: "8rem" }}>
