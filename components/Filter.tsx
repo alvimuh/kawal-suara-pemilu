@@ -147,6 +147,7 @@ function Filter({
 
     const params = new URLSearchParams(searchParams.toString());
     params.set("status", event.target.value);
+    params.set("page", "1");
 
     onFilterChanged(params.toString());
   };
