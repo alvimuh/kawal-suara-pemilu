@@ -58,8 +58,8 @@ export default async function Page() {
             marginBottom: "3rem",
           }}
         >
-          Analisa sederhana hasil perhitungan suara pemilu, langsung dari web
-          KPU.
+          Analisa sederhana hasil perhitungan suara pemilu, data didapatkan
+          langsung dari web KPU.
         </Paragraph>
         <div
           style={{
@@ -243,7 +243,7 @@ export default async function Page() {
           >
             "Kami berharap data yang kami sajikan dapat membantu bagi yang
             sedang mengawal suara pemilu khususnya pilpres kali ini, dan menjadi
-            masukan bagi KPU dalam penyelanggaraan pemilu saat ini da yang akan
+            masukan bagi KPU dalam penyelanggaraan pemilu saat ini dan yang akan
             datang."
           </Paragraph>
           <Flex align="center">
