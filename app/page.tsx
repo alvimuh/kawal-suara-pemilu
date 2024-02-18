@@ -1,12 +1,12 @@
 import Layout from "@/components/Layout";
 import { Insight } from "@/lib/types";
-import { createClient } from "@/utils/supabase/client";
 import { Avatar, Button, Col, Flex, Row, Statistic, Tooltip } from "antd";
 import { Group } from "antd/es/avatar";
 import Card from "antd/es/card/Card";
 import Link from "antd/es/typography/Link";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
+import prisma from "@/prisma/db";
 
 import {
   MdOutlineDataExploration,
@@ -17,11 +17,22 @@ import { PiChartPieDuotone } from "react-icons/pi";
 export const revalidate = 0;
 
 export default async function Page() {
-  const supabase = createClient();
+  const queryResult: Insight[] = await prisma.$queryRaw`SELECT
+    sum(
+          CASE
+              WHEN kpu_tps_v2.total_votes = kpu_tps_v2.total_sum_votes THEN 1
+              ELSE 0
+          END) AS jumlah_sama,
+    sum(
+          CASE
+              WHEN kpu_tps_v2.total_votes <> kpu_tps_v2.total_sum_votes THEN 1
+              ELSE 0
+          END) AS jumlah_tidak_sama,
+    count(*) AS jumlah_tps
+  FROM
+    kpu_tps_v2;`;
 
-  const { data } = await supabase.from("kpu_tps_data_error_1").select();
-
-  const insight: Insight = data !== null ? data[0] : null;
+  const insight: Insight = queryResult[0];
 
   return (
     <Layout>

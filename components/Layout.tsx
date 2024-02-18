@@ -3,11 +3,9 @@ import { Header } from "antd/es/layout/layout";
 import { RiBox1Line } from "react-icons/ri";
 
 import Title from "antd/es/typography/Title";
-import { Flex, Typography } from "antd";
+import { Flex } from "antd";
 import Link from "next/link";
-import Paragraph from "antd/es/typography/Paragraph";
-import { createClient } from "@/utils/supabase/client";
-import dayjs from "dayjs";
+import prisma from "@/prisma/db";
 import { Footer } from "./Footer";
 
 export default async function Layout({
@@ -17,13 +15,11 @@ export default async function Layout({
   children: React.ReactNode;
   contentStyle?: React.CSSProperties | undefined;
 }) {
-  const supabase = createClient();
+  const queryResult: any[] =
+    await prisma.$queryRaw`SELECT last_progress_update FROM kpu_tps_stats kts  WHERE progress = 100 ORDER BY last_progress_update DESC LIMIT 1`;
 
-  const { data } = await supabase
-    .from("kpu_tps_data_error_1")
-    .select("last_update");
-
-  const lastUpdate: string = data !== null ? data[0].last_update : null;
+  const lastUpdate =
+    queryResult !== null ? Number(queryResult[0].last_progress_update) : null;
 
   return (
     <LayoutAntd>

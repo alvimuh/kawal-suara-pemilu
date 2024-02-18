@@ -41,6 +41,7 @@ model kpu_tps {
   @@index([selisih_suara_paslon_dan_jumlah_sah(sort: Desc)], map: "idx_selisih_suara_paslon_dan_jumlah_sah")
   @@index([selisih_suara_sah_tidak_sah_dan_total(sort: Desc)], map: "idx_selisih_suara_sah_tidak_sah_dan_total")
   @@index([updated_at(sort: Desc)], map: "idx_updated_at")
+  @@index([code(sort: Desc)], map: "idx_code_desc")
 }
 
 model kpu_tps_histogram {
@@ -52,7 +53,7 @@ model kpu_tps_histogram {
   all_in_data   Json?    @db.Json
   ts_unix       BigInt?
 
-  @@index([ts(sort: Desc)], map: "idx_ts")
+  @@index([ts_unix], map: "idx_ts_unix")
 }
 
 model kpu_tps_stats {
@@ -89,4 +90,38 @@ model map_loc {
   status     Int?
 
   @@ignore
+}
+
+model key_val {
+  key String @id @db.VarChar
+  val Json?  @db.Json
+}
+
+model kpu_tps_v2 {
+  id                                    Int      @id @default(autoincrement())
+  code                                  String   @unique @db.VarChar(15)
+  provinsi                              String?  @db.VarChar(100)
+  kabupaten                             String?  @db.VarChar(100)
+  kecamatan                             String?  @db.VarChar(100)
+  kelurahan                             String?  @db.VarChar(100)
+  tps                                   String?  @db.VarChar(100)
+  total_votes_01                        BigInt?
+  total_votes_02                        BigInt?
+  total_votes_03                        BigInt?
+  total_sum_votes                       BigInt?
+  total_valid_votes                     BigInt?
+  total_invalid_votes                   BigInt?
+  total_votes                           BigInt?
+  dpt                                   BigInt?
+  dptb                                  BigInt?
+  dptk                                  BigInt?
+  jml_hak_pilih                         BigInt?
+  selisih_suara_paslon_dan_jumlah_sah   BigInt?
+  selisih_suara_sah_tidak_sah_dan_total BigInt?
+  link                                  String?  @db.VarChar(100)
+  pic_urls                              String[] @db.VarChar
+  updated_at                            BigInt?
+  obtained_at                           BigInt?
+  update_id                             BigInt?
+  all_in                                Int?     @db.SmallInt
 }
