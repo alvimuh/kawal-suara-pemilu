@@ -4,12 +4,14 @@ import Filter from "@/components/Filter";
 import MainTable from "@/components/MainTable";
 import { getTps } from "@/lib/fetch";
 import { useQuery } from "@tanstack/react-query";
-import { Col, Row } from "antd";
+import { Alert, Col, Row } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
+
+import Marquee from "react-fast-marquee";
 
 const columns: ColumnsType<TpsData> = [
   {
@@ -180,9 +182,30 @@ export default function MainContent() {
     <>
       <Row style={{ padding: "24px 48px" }}>
         <Col span={24}>
+          <Alert
+            message={
+              <Marquee pauseOnHover delay={2}>
+                Disclaimer bahwa data yang disajikan bersifat sementara dan
+                tidak disarankan untuk digunakan dalam keperluan akademis atau
+                sebagai bukti hukum ◦ Untuk informasi resmi dan lebih akurat,
+                harap kunjungi situs resmi pemerintah. Situs ini merupakan situs
+                personal yang bersifat netral dan tidak berafiliasi dengan pihak
+                manapun ◦ Penting untuk diingat bahwa mungkin terdapat perbedaan
+                data antara situs ini dengan situs KPU resmi akibat data yang
+                disinkronisasi secara berkala dan bukan real-time ◦ Disarankan
+                untuk selalu memeriksa ulang ke situs KPU dari link yang
+                tersedia untuk mendapatkan data yang paling akurat dan terbaru ◦{" "}
+              </Marquee>
+            }
+          />
+        </Col>
+      </Row>
+      <Row style={{ padding: "24px 48px" }}>
+        <Col span={24}>
           <Filter onFilterChanged={reload} />
         </Col>
       </Row>
+
       <Row>
         <Col span={24}>
           <MainTable
