@@ -122,6 +122,15 @@ function Filter({
       params.delete("kelurahan");
     }
 
+    if (name === "kelurahan" && value === undefined) {
+      setFormData((prevState) => ({
+        ...prevState,
+        kelurahan: value,
+      }));
+
+      params.delete("kelurahan");
+    }
+
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
