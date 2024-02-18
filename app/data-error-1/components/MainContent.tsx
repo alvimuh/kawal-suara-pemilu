@@ -11,7 +11,6 @@ import { useState } from "react";
 import { Button, Tag, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 
-import Marquee from "react-fast-marquee";
 import ModalDisclaimer from "@/components/ModalDisclaimer";
 
 const columns: ColumnsType<TpsData> = [

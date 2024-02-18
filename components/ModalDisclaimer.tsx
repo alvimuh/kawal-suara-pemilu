@@ -34,23 +34,22 @@ const ModalDisclaimer: React.FC = () => {
       >
         <ul style={{ marginLeft: 18 }}>
           <li>
+            Situs ini merupakan situs personal yang bersifat netral dan tidak
+            berafiliasi dengan pihak manapun.
+          </li>
+          <li>
             Perlu diingat bahwa data yang disajikan bersifat sementara dan tidak
             disarankan untuk digunakan dalam keperluan akademis atau sebagai
-            bukti hukum
+            bukti hukum.
           </li>
           <li>
-            Untuk informasi resmi dan lebih akurat, harap kunjungi situs resmi
-            pemerintah. Situs ini merupakan situs personal yang bersifat netral
-            dan tidak berafiliasi dengan pihak manapun
-          </li>
-          <li>
-            Penting untuk diingat bahwa mungkin terdapat perbedaan data antara
-            situs ini dengan situs KPU resmi akibat data yang disinkronisasi
-            secara berkala dan bukan real-time
+            Mungkin terdapat perbedaan data antara situs ini dengan situs KPU
+            resmi akibat data yang disinkronisasi secara berkala dan bukan
+            real-time.
           </li>
           <li>
             Disarankan untuk selalu memeriksa ulang ke situs KPU dari link yang
-            tersedia untuk mendapatkan data yang paling akurat dan terbaru
+            tersedia untuk mendapatkan data yang paling akurat dan terbaru.
           </li>
         </ul>
       </Modal>
