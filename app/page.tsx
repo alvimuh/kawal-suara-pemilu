@@ -13,6 +13,8 @@ import {
   MdOutlineRunningWithErrors,
 } from "react-icons/md";
 import { PiChartPieDuotone } from "react-icons/pi";
+import Iframe from "@/components/IframeWithLoader";
+import ModalDisclaimer from "@/components/ModalDisclaimer";
 
 export const revalidate = 0;
 
@@ -192,7 +194,7 @@ export default async function Page() {
               />
             </Card>
           </Col>
-          <Col xs={24}>
+          <Col xs={24} style={{ marginTop: "0.8rem" }}>
             <Link href="/data-error-1">
               <Button
                 size="large"
@@ -236,84 +238,88 @@ export default async function Page() {
             </Card>
           </Col>
         </Row>
-        <Row gutter={[12, 12]}>
-          <Col xs={24}>
+        <Row gutter={[12, 12]} style={{ marginTop: "6rem" }}>
+          <Col xs={24} md={18} style={{ marginBottom: "1rem" }}>
             <Title
               level={2}
               style={{
                 fontSize: "1.8rem",
-                marginTop: "3rem",
+                marginBottom: "1rem",
               }}
             >
               Dashboard Kawal Pemilu 2024
             </Title>
+            <ModalDisclaimer />
           </Col>
           <Col xs={24} md={8}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708252648800&to=1708253548801&theme=light&panelId=28"
               style={{
                 border: 0,
                 width: "100%",
+                height: "240px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
           <Col xs={24} md={8}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708252660145&to=1708253560146&theme=light&panelId=29"
               style={{
                 border: 0,
                 width: "100%",
+                height: "240px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
           <Col xs={24} md={8}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708252682144&to=1708253582144&theme=light&panelId=30"
               style={{
                 border: 0,
                 width: "100%",
+                height: "240px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
           <Col xs={24} md={4}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708252525908&to=1708253425909&theme=light&panelId=5"
               style={{
                 border: 0,
                 width: "100%",
                 height: "300px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
           <Col xs={24} md={4}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708252394882&to=1708253294882&theme=light&panelId=6"
               style={{
                 border: 0,
                 width: "100%",
                 height: "300px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
           <Col xs={24} md={8}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me:3000/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708253020711&to=1708253920711&theme=light&panelId=8"
               style={{
                 border: 0,
                 width: "100%",
                 height: "300px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
           <Col xs={24} md={8}>
-            <iframe
+            <Iframe
               src="http://kawalrealcount.isnan.me:3000/d-solo/b8adb7ab-b6fd-4cef-87e6-d75201223b8c/kawal-real-count?orgId=2&from=1708253043618&to=1708253943618&theme=light&panelId=10"
               style={{
                 border: 0,
                 width: "100%",
                 height: "300px",
               }}
-            ></iframe>
+            ></Iframe>
           </Col>
         </Row>
 
