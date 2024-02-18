@@ -239,7 +239,7 @@ export default async function Page() {
 
         <Flex vertical style={{ marginTop: "8rem" }}>
           <Paragraph
-            style={{ marginBottom: 48, color: "black", maxWidth: "400px" }}
+            style={{ marginBottom: 20, color: "black", maxWidth: "400px" }}
           >
             "Kami berharap data yang kami sajikan dapat membantu bagi yang
             sedang mengawal suara pemilu khususnya pilpres kali ini, dan menjadi
@@ -247,18 +247,6 @@ export default async function Page() {
             datang."
           </Paragraph>
           <Flex align="center">
-            <Title
-              level={3}
-              style={{
-                marginRight: 12,
-                marginBottom: 0,
-                fontWeight: 500,
-                color: "gray",
-                fontSize: "1rem",
-              }}
-            >
-              Dikembangkan oleh
-            </Title>
             <Group size={40}>
               <Tooltip title="Alfian Isnan - Backend Engineer" placement="top">
                 <Avatar src="https://media.licdn.com/dms/image/C4D03AQHnkg-cFBsk_g/profile-displayphoto-shrink_100_100/0/1644459244130?e=1713398400&v=beta&t=iBT_kkfSds8zsCbMTGGv0k39bT8AoTAN31e_xo-QH5U" />

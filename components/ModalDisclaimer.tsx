@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const ModalDisclaimer: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +19,18 @@ const ModalDisclaimer: React.FC = () => {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button
+        type="primary"
+        onClick={showModal}
+        icon={
+          <IoMdInformationCircleOutline
+            size={18}
+            style={{
+              verticalAlign: "-0.28em",
+            }}
+          />
+        }
+      >
         Penting untuk dibaca
       </Button>
       <Modal
