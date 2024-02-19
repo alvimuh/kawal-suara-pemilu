@@ -258,7 +258,7 @@ export default function Page() {
               }}
             >
               #2 Mengecek TPS dengan Jumlah Perolehan Suara yang Melebihi Jumlah
-              Pengguna Hak Pilih TPS
+              Pengguna Hak Pilih
             </Title>
             <Paragraph>
               Pada pengujian kedua ini, kami juga mendefinisikan dua status data

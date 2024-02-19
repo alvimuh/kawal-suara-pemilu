@@ -1,33 +1,10 @@
 "use client";
 
 import Layout from "@/components/Layout";
-import {
-  Alert,
-  Avatar,
-  Button,
-  Col,
-  Divider,
-  Flex,
-  Row,
-  Skeleton,
-  Statistic,
-  Tooltip,
-} from "antd";
-import { Group } from "antd/es/avatar";
-import Card from "antd/es/card/Card";
-import Link from "antd/es/typography/Link";
+import { Button, Col, Divider, Row } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
-
-import {
-  MdOutlineDataExploration,
-  MdOutlineRunningWithErrors,
-} from "react-icons/md";
-import { PiChartPieDuotone } from "react-icons/pi";
 import Iframe from "@/components/IframeWithLoader";
-import ModalDisclaimer from "@/components/ModalDisclaimer";
-import { useQuery } from "@tanstack/react-query";
-import { getInsight } from "@/lib/fetch";
 
 export default function Page() {
   return (
