@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
   let tpsData = await prisma.kpu_tps_v2.findMany({
     where,
-    orderBy: { code: "asc" },
+    orderBy: { id: "asc" },
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
