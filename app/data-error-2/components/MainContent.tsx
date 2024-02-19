@@ -88,30 +88,30 @@ const columns: ColumnsType<TpsData> = [
     width: 140,
   },
   {
-    key: "total_valid_votes",
+    key: "jml_hak_pilih",
     title: () => (
       <Tooltip
-        title="Dari web KPU pada section: Jumlah Suara Sah dan Tidak Sah"
+        title="Dari web KPU pada section: Data Pengguna Hak Pilih"
         placement="bottom"
       >
-        Jumlah Suara Sah
+        Jumlah Hak Pilih
       </Tooltip>
     ),
-    dataIndex: "total_valid_votes",
+    dataIndex: "jml_hak_pilih",
     width: 110,
   },
   {
-    key: "selisih_suara_paslon_dan_jumlah_sah",
+    key: "kelebihan_suara_paslon_dan_jumlah_hak_pilih",
     title: () => (
       <Tooltip
-        title="Hasil selisih dari Jumlah Suara Seluruh Paslon dan Jumlah Suara Sah"
+        title="Hasil pengurangan dari Jumlah Suara Seluruh Paslon dan Jumlah Hak Pilih"
         placement="bottom"
       >
-        Selisih
+        Jumlah Suara Lebih
       </Tooltip>
     ),
-    dataIndex: "selisih_suara_paslon_dan_jumlah_sah",
-    width: 80,
+    dataIndex: "kelebihan_suara_paslon_dan_jumlah_hak_pilih",
+    width: 120,
   },
   {
     key: "is_match",
@@ -168,8 +168,8 @@ export default function MainContent() {
 
   const [params, setParams] = useState(searchParams.toString());
   const { data, isLoading, isRefetching } = useQuery({
-    queryKey: ["tps", "error-1", params],
-    queryFn: () => getTps(params, "error-1"),
+    queryKey: ["tps", "error-2", params],
+    queryFn: () => getTps(params, "error-2"),
   });
 
   const reload = (params: string) => {
