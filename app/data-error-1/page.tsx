@@ -1,9 +1,5 @@
-"use client";
-
 import Layout from "@/components/Layout";
 import MainContent from "./components/MainContent";
-
-export const revalidate = 0;
 
 export default function Page({}) {
   return (
