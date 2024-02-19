@@ -177,7 +177,7 @@ export default function Page() {
           <Col xs={24} sm={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
-                <Skeleton paragraph={false} avatar loading />
+                <Skeleton paragraph={false} avatar loading active />
               ) : (
                 <Statistic
                   title="Data Valid"
