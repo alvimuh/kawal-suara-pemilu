@@ -11,7 +11,8 @@ const defaultUrl = process.env.VERCEL_URL
 export const metadata = {
   metadataBase: new URL(defaultUrl),
   title: "Kawal Suara Pemilu - Data diambil dari Web Resmi KPU",
-  description: "Analisa sederhana data dari web resmi KPU",
+  description:
+    "Analisa sederhana dari hasil perhitungan Real Count Pilpres 2024, data didapatkan langsung dari web KPU.",
 };
 
 export default function RootLayout({

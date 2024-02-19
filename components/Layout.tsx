@@ -1,25 +1,29 @@
-import LayoutAntd, { Content } from "antd/es/layout/layout";
+"use client";
+
+import LayoutAntd, { Content, Footer } from "antd/es/layout/layout";
 import { Header } from "antd/es/layout/layout";
 import { RiBox1Line } from "react-icons/ri";
 
 import Title from "antd/es/typography/Title";
-import { Flex } from "antd";
+import { Flex, Skeleton, Typography } from "antd";
 import Link from "next/link";
-import prisma from "@/prisma/db";
-import { Footer } from "./Footer";
+import { useQuery } from "@tanstack/react-query";
+import { getInsight } from "@/lib/fetch";
+import dayjs from "dayjs";
 
-export default async function Layout({
+export default function Layout({
   children,
   contentStyle,
 }: {
   children: React.ReactNode;
   contentStyle?: React.CSSProperties | undefined;
 }) {
-  const queryResult: any[] =
-    await prisma.$queryRaw`SELECT last_progress_update FROM kpu_tps_stats kts  WHERE progress = 100 ORDER BY last_progress_update DESC LIMIT 1`;
-
-  const lastUpdate =
-    queryResult !== null ? Number(queryResult[0].last_progress_update) : null;
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["insight", "last-update"],
+    queryFn: () => getInsight("last-update"),
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <LayoutAntd>
@@ -52,7 +56,24 @@ export default async function Layout({
         </Link>
       </Header>
       <Content style={contentStyle}>{children}</Content>
-      <Footer lastUpdate={lastUpdate} />
+      <Footer style={{ textAlign: "center", background: "white" }}>
+        <Skeleton
+          loading={!data && isLoading && isError}
+          paragraph={false}
+          active
+          style={{
+            width: 200,
+            margin: "auto",
+            marginBottom: 10,
+          }}
+        >
+          <Typography.Paragraph style={{ color: "GrayText" }}>
+            Terakhir disinkronkan pada{" "}
+            {dayjs(data?.data?.last_update).format("HH:MM DD/MM/YYYY")}
+          </Typography.Paragraph>
+        </Skeleton>
+        Alvilab ©{new Date().getFullYear()} Pemilu Damai
+      </Footer>
     </LayoutAntd>
   );
 }

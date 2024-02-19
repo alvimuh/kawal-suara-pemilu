@@ -1,12 +1,22 @@
+"use client";
+
 import Layout from "@/components/Layout";
-import { Insight } from "@/lib/types";
-import { Avatar, Button, Col, Flex, Row, Statistic, Tooltip } from "antd";
+import {
+  Alert,
+  Avatar,
+  Button,
+  Col,
+  Flex,
+  Row,
+  Skeleton,
+  Statistic,
+  Tooltip,
+} from "antd";
 import { Group } from "antd/es/avatar";
 import Card from "antd/es/card/Card";
 import Link from "antd/es/typography/Link";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
-import prisma from "@/prisma/db";
 
 import {
   MdOutlineDataExploration,
@@ -15,26 +25,20 @@ import {
 import { PiChartPieDuotone } from "react-icons/pi";
 import Iframe from "@/components/IframeWithLoader";
 import ModalDisclaimer from "@/components/ModalDisclaimer";
+import { useQuery } from "@tanstack/react-query";
+import { getInsight } from "@/lib/fetch";
 
 export const revalidate = 0;
 
-export default async function Page() {
-  const queryResult: Insight[] = await prisma.$queryRaw`SELECT
-    sum(
-          CASE
-              WHEN kpu_tps_v2.total_votes = kpu_tps_v2.total_sum_votes THEN 1
-              ELSE 0
-          END) AS jumlah_sama,
-    sum(
-          CASE
-              WHEN kpu_tps_v2.total_votes <> kpu_tps_v2.total_sum_votes THEN 1
-              ELSE 0
-          END) AS jumlah_tidak_sama,
-    count(*) AS jumlah_tps
-  FROM
-    kpu_tps_v2;`;
+export default function Page() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["insight", "error-1"],
+    queryFn: () => getInsight("error-1"),
+    retry: 1,
+    refetchOnWindowFocus: false,
+  });
 
-  const insight: Insight = queryResult[0];
+  const { data: insight } = data ?? { data: null };
 
   return (
     <Layout>
@@ -71,8 +75,8 @@ export default async function Page() {
             marginBottom: "3rem",
           }}
         >
-          Analisa Sederhana Hasil Perhitungan Real Count Pemilihan Presiden
-          2024. Data Didapatkan Langsung Dari Web KPU
+          Analisa sederhana dari hasil perhitungan Real Count Pilpres 2024, data
+          didapatkan langsung dari web KPU.
         </Paragraph>
         <div
           style={{
@@ -159,52 +163,71 @@ export default async function Page() {
               anggap data TPS tersebut adalah valid. Dari validasi sederhana ini
               saja, kami menemukan cukup banyak data yang berpotensi keliru.
             </Paragraph>
+
             <Paragraph>
               Sejauh ini, dari{" "}
-              {insight.jumlah_tps.toLocaleString().replace(",", ".")} TPS yang
-              kami dapatkan, kami menemukan:
+              {insight
+                ? insight.jumlah_tps.toLocaleString().replace(",", ".")
+                : null}{" "}
+              TPS yang kami dapatkan, kami menemukan:
             </Paragraph>
           </Col>
         </Row>
         <Row gutter={[12, 12]}>
           <Col xs={24} sm={8}>
             <Card bordered={false}>
-              <Statistic
-                title="Data Valid"
-                value={insight.jumlah_sama}
-                valueStyle={{ color: "#3f8600" }}
-                groupSeparator="."
-                prefix={
-                  <PiChartPieDuotone
-                    size={30}
-                    style={{
-                      verticalAlign: "-0.25em",
-                    }}
-                  />
-                }
-                suffix="TPS"
-              />
+              {isLoading || isError ? (
+                <Skeleton paragraph={false} avatar loading />
+              ) : (
+                <Statistic
+                  title="Data Valid"
+                  value={insight?.jumlah_sama}
+                  valueStyle={{ color: "#3f8600" }}
+                  groupSeparator="."
+                  prefix={
+                    <PiChartPieDuotone
+                      size={30}
+                      style={{
+                        verticalAlign: "-0.25em",
+                      }}
+                    />
+                  }
+                  suffix="TPS"
+                />
+              )}
             </Card>
           </Col>
           <Col xs={24} sm={8}>
             <Card bordered={false}>
-              <Statistic
-                title="Data Berpotensi Tidak Valid"
-                value={insight.jumlah_tidak_sama}
-                valueStyle={{ color: "#cf1322" }}
-                groupSeparator="."
-                prefix={
-                  <MdOutlineRunningWithErrors
-                    size={30}
-                    style={{
-                      verticalAlign: "-0.25em",
-                    }}
-                  />
-                }
-                suffix="TPS"
-              />
+              {isLoading || isError ? (
+                <Skeleton paragraph={false} avatar loading />
+              ) : (
+                <Statistic
+                  title="Data Berpotensi Tidak Valid"
+                  value={insight?.jumlah_tidak_sama}
+                  valueStyle={{ color: "#cf1322" }}
+                  groupSeparator="."
+                  prefix={
+                    <MdOutlineRunningWithErrors
+                      size={30}
+                      style={{
+                        verticalAlign: "-0.25em",
+                      }}
+                    />
+                  }
+                  suffix="TPS"
+                />
+              )}
             </Card>
           </Col>
+          {isError && (
+            <Col xs={24} sm={16}>
+              <Alert
+                message="Kemungkinan proses sync data sedang berjalan, sehingga data terbaru belum bisa ditampilkan, harap coba lagi beberapa saat lagi."
+                type="warning"
+              />
+            </Col>
+          )}
           <Col xs={24} style={{ marginTop: "0.8rem" }}>
             <Link href="/data-error-1">
               <Button

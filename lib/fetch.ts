@@ -51,3 +51,7 @@ export async function getKelurahan(
 export async function getTps(searchParams: {}) {
   return (await fetch(`/api/tps?${searchParams.toString()}`)).json();
 }
+
+export async function getInsight(type: string) {
+  return (await fetch(`/api/insight?type=${type}`)).json();
+}
