@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
     kelurahan: request.nextUrl.searchParams.get("kelurahan"),
     status: request.nextUrl.searchParams.get("status"),
   };
-  console.log(searchParams);
 
   let page = 1;
   let pageSize = 10;
@@ -41,11 +40,11 @@ export async function GET(request: NextRequest) {
       }
       if (searchParams.kecamatan) {
         where.kecamatan = searchParams.kecamatan;
-        orderBy = { id: "asc" };
+        orderBy = { code: "asc" };
       }
       if (searchParams.kelurahan) {
         where.kelurahan = searchParams.kelurahan;
-        orderBy = { id: "asc" };
+        orderBy = { code: "asc" };
       }
 
       if (searchParams.status) {
@@ -108,14 +107,13 @@ export async function GET(request: NextRequest) {
       }
       if (searchParams.kecamatan) {
         where.kecamatan = searchParams.kecamatan;
-        orderBy = { id: "asc" };
+        orderBy = { code: "asc" };
       }
       if (searchParams.kelurahan) {
         where.kelurahan = searchParams.kelurahan;
-        orderBy = { id: "asc" };
+        orderBy = { code: "asc" };
       }
 
-      console.log(searchParams.status);
       if (searchParams.status) {
         switch (searchParams.status) {
           case "valid":
@@ -136,7 +134,6 @@ export async function GET(request: NextRequest) {
             break;
         }
       }
-      console.log(where);
 
       let tpsData = await prisma.kpu_tps_v2.findMany({
         where,
@@ -173,9 +170,6 @@ export async function GET(request: NextRequest) {
       }
 
       return Response.json({ data: json(tpsData), count });
-    }
-
-    case "data-error-2": {
     }
   }
 }

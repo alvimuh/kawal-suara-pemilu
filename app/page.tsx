@@ -31,8 +31,8 @@ import { getInsight } from "@/lib/fetch";
 
 export default function Page() {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["insight", "error-1"],
-    queryFn: () => getInsight("error-1"),
+    queryKey: ["insight", "data-error"],
+    queryFn: () => getInsight("data-error"),
     retry: 1,
     refetchOnWindowFocus: false,
   });
@@ -142,6 +142,10 @@ export default function Page() {
               menguji data tersebut valid atau berpotensi tidak valid dengan
               validasi data yang cukup sederhana:
             </Paragraph>
+          </Col>
+        </Row>
+        <Row gutter={[12, 12]}>
+          <Col span={24}>
             <Title
               level={3}
               style={{
@@ -149,8 +153,8 @@ export default function Page() {
                 marginTop: "2.5rem",
               }}
             >
-              #1 Menguji selisih antara jumlah suara sah dengan hasil
-              penjumlahan suara dari ketiga paslon
+              #1 Mengecek TPS dengan Jumlah Perolehan Suara yang Melebihi Jumlah
+              Suara Sah
             </Title>
             <Paragraph>
               Kami mendefinisikan dua status data tiap TPS, yakni valid dan
@@ -166,13 +170,11 @@ export default function Page() {
             <Paragraph>
               Sejauh ini, dari{" "}
               {insight
-                ? insight.jumlah_tps.toLocaleString().replace(",", ".")
+                ? insight.total.toLocaleString().replace(",", ".")
                 : null}{" "}
               TPS yang kami dapatkan, kami menemukan:
             </Paragraph>
           </Col>
-        </Row>
-        <Row gutter={[12, 12]}>
           <Col xs={24} sm={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
@@ -180,7 +182,7 @@ export default function Page() {
               ) : (
                 <Statistic
                   title="Data Valid / Bersih"
-                  value={insight?.jumlah_sama}
+                  value={insight?.total_data_not_error_1}
                   valueStyle={{ color: "#3f8600" }}
                   groupSeparator="."
                   prefix={
@@ -203,7 +205,7 @@ export default function Page() {
               ) : (
                 <Statistic
                   title="Data Berpotensi Tidak Valid"
-                  value={insight?.jumlah_tidak_sama}
+                  value={insight?.total_data_error_1}
                   valueStyle={{ color: "#cf1322" }}
                   groupSeparator="."
                   prefix={
@@ -246,31 +248,111 @@ export default function Page() {
             </Link>
           </Col>
         </Row>
-        <Title
-          level={3}
-          style={{
-            fontSize: "1.3rem",
-            marginTop: "3.5rem",
-          }}
-        >
-          #2 Mengecek jumlah perolehan suara yang melebihi jumlah pengguna hak
-          pilih TPS
-        </Title>
-        <Row gutter={16}>
+        <Row gutter={[12, 12]}>
           <Col span={24}>
+            <Title
+              level={3}
+              style={{
+                fontSize: "1.3rem",
+                marginTop: "2.5rem",
+              }}
+            >
+              #2 Mengecek TPS dengan Jumlah Perolehan Suara yang Melebihi Jumlah
+              Pengguna Hak Pilih TPS
+            </Title>
+            <Paragraph>
+              Pada pengujian kedua ini, kami juga mendefinisikan dua status data
+              tiap TPS, yakni valid dan berpotensi tidak valid. Contoh: Jika
+              dijumlahkan hasil perolehan suara Paslon 01 + 02 + 03 adalah 400
+              suara, kemudian pada atribut Jumlah Hak Suara adalah 300, maka
+              terdapat kelebihan 100 suara yang menyebabkan data dari TPS
+              tersebut berpotensi tidak valid. Jika tidak ada selisih antara dua
+              atribut data tersebut, maka kami anggap data TPS tersebut adalah
+              valid.
+            </Paragraph>
+
+            <Paragraph>
+              Sejauh ini, dari{" "}
+              {insight
+                ? insight.total.toLocaleString().replace(",", ".")
+                : null}{" "}
+              TPS yang kami dapatkan, kami menemukan:
+            </Paragraph>
+          </Col>
+          <Col xs={24} sm={8}>
             <Card bordered={false}>
-              <Paragraph
-                style={{
-                  margin: "0.5rem",
-                  color: "GrayText",
-                  fontSize: "1rem",
-                }}
-              >
-                Fitur masih kami kembangkan
-              </Paragraph>
+              {isLoading || isError ? (
+                <Skeleton paragraph={false} avatar loading active />
+              ) : (
+                <Statistic
+                  title="Data Valid / Bersih"
+                  value={insight?.total_data_not_error_2}
+                  valueStyle={{ color: "#3f8600" }}
+                  groupSeparator="."
+                  prefix={
+                    <PiChartPieDuotone
+                      size={30}
+                      style={{
+                        verticalAlign: "-0.25em",
+                      }}
+                    />
+                  }
+                  suffix="TPS"
+                />
+              )}
             </Card>
           </Col>
+          <Col xs={24} sm={8}>
+            <Card bordered={false}>
+              {isLoading || isError ? (
+                <Skeleton paragraph={false} avatar loading active />
+              ) : (
+                <Statistic
+                  title="Data Berpotensi Tidak Valid"
+                  value={insight?.total_data_error_2}
+                  valueStyle={{ color: "#cf1322" }}
+                  groupSeparator="."
+                  prefix={
+                    <MdOutlineRunningWithErrors
+                      size={30}
+                      style={{
+                        verticalAlign: "-0.25em",
+                      }}
+                    />
+                  }
+                  suffix="TPS"
+                />
+              )}
+            </Card>
+          </Col>
+          {isError && (
+            <Col xs={24} sm={16}>
+              <Alert
+                message="Kemungkinan proses sync data sedang berjalan, sehingga data terbaru belum bisa ditampilkan, harap coba lagi beberapa saat lagi."
+                type="warning"
+              />
+            </Col>
+          )}
+          <Col xs={24} style={{ marginTop: "0.8rem" }}>
+            <Link href="/data-error-2">
+              <Button
+                size="large"
+                type="primary"
+                icon={
+                  <MdOutlineDataExploration
+                    fontSize={20}
+                    style={{
+                      verticalAlign: "-0.18em",
+                    }}
+                  />
+                }
+              >
+                Buka Detail Data
+              </Button>
+            </Link>
+          </Col>
         </Row>
+
         <Divider />
         <Row gutter={[12, 12]} style={{ marginTop: "4rem" }}>
           <Col xs={24} md={18} style={{ marginBottom: "1rem" }}>

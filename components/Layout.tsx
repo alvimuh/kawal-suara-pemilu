@@ -58,7 +58,7 @@ export default function Layout({
       <Content style={contentStyle}>{children}</Content>
       <Footer style={{ textAlign: "center", background: "white" }}>
         <Skeleton
-          loading={!data && isLoading && isError}
+          loading={isLoading || isError}
           paragraph={false}
           active
           style={{
@@ -69,7 +69,7 @@ export default function Layout({
         >
           <Typography.Paragraph style={{ color: "GrayText" }}>
             Terakhir disinkronkan pada{" "}
-            {dayjs(data?.data?.last_update).format("HH:MM DD/MM/YYYY")}
+            {dayjs(data?.data.last_update).format("HH:MM DD/MM/YYYY")}
           </Typography.Paragraph>
         </Skeleton>
         Alvilab ©{new Date().getFullYear()} Pemilu Damai
