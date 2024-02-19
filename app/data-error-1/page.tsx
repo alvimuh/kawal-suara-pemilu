@@ -1,6 +1,5 @@
-import { Col, Row } from "antd";
-import MainTable from "@/components/MainTable";
-import Filter from "@/components/Filter";
+"use client";
+
 import Layout from "@/components/Layout";
 import MainContent from "./components/MainContent";
 

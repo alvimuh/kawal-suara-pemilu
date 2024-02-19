@@ -6,6 +6,7 @@ import {
   Avatar,
   Button,
   Col,
+  Divider,
   Flex,
   Row,
   Skeleton,
@@ -27,8 +28,6 @@ import Iframe from "@/components/IframeWithLoader";
 import ModalDisclaimer from "@/components/ModalDisclaimer";
 import { useQuery } from "@tanstack/react-query";
 import { getInsight } from "@/lib/fetch";
-
-export const revalidate = 0;
 
 export default function Page() {
   const { data, isLoading, isError } = useQuery({
@@ -180,7 +179,7 @@ export default function Page() {
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
                 <Statistic
-                  title="Data Valid"
+                  title="Data Valid / Bersih"
                   value={insight?.jumlah_sama}
                   valueStyle={{ color: "#3f8600" }}
                   groupSeparator="."
@@ -200,7 +199,7 @@ export default function Page() {
           <Col xs={24} sm={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
-                <Skeleton paragraph={false} avatar loading />
+                <Skeleton paragraph={false} avatar loading active />
               ) : (
                 <Statistic
                   title="Data Berpotensi Tidak Valid"
@@ -272,7 +271,8 @@ export default function Page() {
             </Card>
           </Col>
         </Row>
-        <Row gutter={[12, 12]} style={{ marginTop: "6rem" }}>
+        <Divider />
+        <Row gutter={[12, 12]} style={{ marginTop: "4rem" }}>
           <Col xs={24} md={18} style={{ marginBottom: "1rem" }}>
             <Title
               level={2}
@@ -368,8 +368,9 @@ export default function Page() {
             </Button>
           </Paragraph>
         </Row>
+        <Divider />
 
-        <Flex vertical style={{ marginTop: "8rem" }}>
+        <Flex vertical style={{ marginTop: "4rem" }}>
           <Paragraph
             style={{ marginBottom: 20, color: "black", maxWidth: "400px" }}
           >
