@@ -123,7 +123,6 @@ export async function GET(request: NextRequest) {
               not: 0,
             };
             where.total_votes = { not: 0 };
-            where.jml_hak_pilih = { not: 0 };
             break;
           case "invalid":
             where.total_sum_votes = {
@@ -131,7 +130,6 @@ export async function GET(request: NextRequest) {
               not: 0,
             };
             where.total_votes = { not: 0 };
-            where.jml_hak_pilih = { not: 0 };
             break;
         }
       }
@@ -142,7 +140,6 @@ export async function GET(request: NextRequest) {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
-      console.log(where);
 
       let count = await prisma.kpu_tps_v2.count({ where });
 
@@ -152,8 +149,7 @@ export async function GET(request: NextRequest) {
           let diff = 0;
           if (
             Number(item.total_votes) == 0 ||
-            Number(item.total_sum_votes) === 0 ||
-            Number(item.jml_hak_pilih) === 0
+            Number(item.total_sum_votes) === 0
           ) {
             status = 1; // kosong
           } else if (

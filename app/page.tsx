@@ -8,6 +8,7 @@ import {
   Col,
   Divider,
   Flex,
+  Popover,
   Row,
   Skeleton,
   Statistic,
@@ -24,6 +25,7 @@ import {
   MdOutlineRunningWithErrors,
 } from "react-icons/md";
 import { PiChartPieDuotone } from "react-icons/pi";
+import { BsDatabaseSlash } from "react-icons/bs";
 import Iframe from "@/components/IframeWithLoader";
 import ModalDisclaimer from "@/components/ModalDisclaimer";
 import { useQuery } from "@tanstack/react-query";
@@ -167,72 +169,96 @@ export default function Page() {
               saja, kami menemukan cukup banyak data yang berpotensi keliru.
             </Paragraph>
           </Col>
-          {/* <Col xs={24} sm={8}>
+          <Col xs={24} sm={12} md={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Statistic
-                  title="Data Valid / Bersih"
-                  value={insight?.total_data_not_error_1}
-                  valueStyle={{ color: "#3f8600" }}
-                  groupSeparator="."
-                  prefix={
-                    <PiChartPieDuotone
-                      size={30}
-                      style={{
-                        verticalAlign: "-0.25em",
-                      }}
-                    />
-                  }
-                  suffix="TPS"
-                />
+                <Popover
+                  content="Jumlah TPS dengan jumlah suara seluruh paslon dan jumlah surat suara sah adalah sama"
+                  placement="bottomLeft"
+                >
+                  <Statistic
+                    title="Data Valid / Bersih"
+                    value={insight?.total_data_not_error_1}
+                    valueStyle={{ color: "#3f8600" }}
+                    groupSeparator="."
+                    prefix={
+                      <PiChartPieDuotone
+                        size={30}
+                        style={{
+                          verticalAlign: "-0.25em",
+                        }}
+                      />
+                    }
+                    suffix="TPS"
+                    style={{
+                      cursor: "help",
+                    }}
+                  />
+                </Popover>
               )}
             </Card>
           </Col>
-          <Col xs={24} sm={8}>
+          <Col xs={24} sm={12} md={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Statistic
-                  title="Data Berpotensi Tidak Valid"
-                  value={insight?.total_data_error_1}
-                  valueStyle={{ color: "#cf1322" }}
-                  groupSeparator="."
-                  prefix={
-                    <MdOutlineRunningWithErrors
-                      size={30}
-                      style={{
-                        verticalAlign: "-0.25em",
-                      }}
-                    />
-                  }
-                  suffix="TPS"
-                />
+                <Popover
+                  content="Jumlah TPS dengan jumlah suara seluruh paslon berbeda dengan jumlah surat suara sah"
+                  placement="bottomLeft"
+                >
+                  <Statistic
+                    title="Data Berpotensi Tidak Valid"
+                    value={insight?.total_data_error_1}
+                    valueStyle={{ color: "#cf1322" }}
+                    groupSeparator="."
+                    prefix={
+                      <MdOutlineRunningWithErrors
+                        size={30}
+                        style={{
+                          verticalAlign: "-0.25em",
+                        }}
+                      />
+                    }
+                    suffix="TPS"
+                    style={{
+                      cursor: "help",
+                    }}
+                  />
+                </Popover>
               )}
             </Card>
           </Col>
-          <Col xs={24} sm={8}>
+          <Col xs={24} md={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Statistic
-                  title="Data Kosong / Diproses KPU"
-                  value={insight?.total_data_null}
-                  valueStyle={{ color: "#faad14" }}
-                  groupSeparator="."
-                  prefix={
-                    <MdOutlineRunningWithErrors
-                      size={30}
-                      style={{
-                        verticalAlign: "-0.25em",
-                      }}
-                    />
-                  }
-                  suffix="TPS"
-                />
+                <Popover
+                  content="Jumlah TPS dengan total suara seluruh paslon adalah 0"
+                  placement="bottomLeft"
+                >
+                  <Statistic
+                    title="Data Kosong / Diproses KPU"
+                    value={insight?.total_data_null}
+                    valueStyle={{ color: "#faad14" }}
+                    groupSeparator="."
+                    prefix={
+                      <BsDatabaseSlash
+                        size={30}
+                        style={{
+                          verticalAlign: "-0.25em",
+                        }}
+                      />
+                    }
+                    suffix="TPS"
+                    style={{
+                      cursor: "help",
+                    }}
+                  />
+                </Popover>
               )}
             </Card>
           </Col>
@@ -243,7 +269,7 @@ export default function Page() {
                 type="warning"
               />
             </Col>
-          )} */}
+          )}
           <Col xs={24} style={{ marginTop: "0.8rem" }}>
             <Link href="/data-error-1">
               <Button
@@ -286,72 +312,96 @@ export default function Page() {
               valid.
             </Paragraph>
           </Col>
-          {/* <Col xs={24} sm={8}>
+          <Col xs={24} sm={12} md={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Statistic
-                  title="Data Valid / Bersih"
-                  value={insight?.total_data_not_error_2}
-                  valueStyle={{ color: "#3f8600" }}
-                  groupSeparator="."
-                  prefix={
-                    <PiChartPieDuotone
-                      size={30}
-                      style={{
-                        verticalAlign: "-0.25em",
-                      }}
-                    />
-                  }
-                  suffix="TPS"
-                />
+                <Popover
+                  content="Jumlah TPS dengan total suara seluruh paslon tidak melebihi jumlah pengguna hak pilih"
+                  placement="bottomLeft"
+                >
+                  <Statistic
+                    title="Data Valid / Bersih"
+                    value={insight?.total_data_not_error_2}
+                    valueStyle={{ color: "#3f8600" }}
+                    groupSeparator="."
+                    prefix={
+                      <PiChartPieDuotone
+                        size={30}
+                        style={{
+                          verticalAlign: "-0.25em",
+                        }}
+                      />
+                    }
+                    suffix="TPS"
+                    style={{
+                      cursor: "help",
+                    }}
+                  />
+                </Popover>
               )}
             </Card>
           </Col>
-          <Col xs={24} sm={8}>
+          <Col xs={24} sm={12} md={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Statistic
-                  title="Data Berpotensi Tidak Valid"
-                  value={insight?.total_data_error_2}
-                  valueStyle={{ color: "#cf1322" }}
-                  groupSeparator="."
-                  prefix={
-                    <MdOutlineRunningWithErrors
-                      size={30}
-                      style={{
-                        verticalAlign: "-0.25em",
-                      }}
-                    />
-                  }
-                  suffix="TPS"
-                />
+                <Popover
+                  content="Jumlah TPS dengan total suara seluruh paslon melebihi jumlah pengguna hak pilih"
+                  placement="bottomLeft"
+                >
+                  <Statistic
+                    title="Data Berpotensi Tidak Valid"
+                    value={insight?.total_data_error_2}
+                    valueStyle={{ color: "#cf1322" }}
+                    groupSeparator="."
+                    prefix={
+                      <MdOutlineRunningWithErrors
+                        size={30}
+                        style={{
+                          verticalAlign: "-0.25em",
+                        }}
+                      />
+                    }
+                    suffix="TPS"
+                    style={{
+                      cursor: "help",
+                    }}
+                  />
+                </Popover>
               )}
             </Card>
           </Col>
-          <Col xs={24} sm={8}>
+          <Col xs={24} md={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Statistic
-                  title="Data Kosong / Diproses KPU"
-                  value={insight?.total_data_null}
-                  valueStyle={{ color: "#faad14" }}
-                  groupSeparator="."
-                  prefix={
-                    <MdOutlineRunningWithErrors
-                      size={30}
-                      style={{
-                        verticalAlign: "-0.25em",
-                      }}
-                    />
-                  }
-                  suffix="TPS"
-                />
+                <Popover
+                  content="Jumlah TPS dengan total suara seluruh paslon adalah 0"
+                  placement="bottomLeft"
+                >
+                  <Statistic
+                    title="Data Kosong / Diproses KPU"
+                    value={insight?.total_data_null}
+                    valueStyle={{ color: "#faad14" }}
+                    groupSeparator="."
+                    prefix={
+                      <BsDatabaseSlash
+                        size={30}
+                        style={{
+                          verticalAlign: "-0.25em",
+                        }}
+                      />
+                    }
+                    suffix="TPS"
+                    style={{
+                      cursor: "help",
+                    }}
+                  />
+                </Popover>
               )}
             </Card>
           </Col>
@@ -362,7 +412,7 @@ export default function Page() {
                 type="warning"
               />
             </Col>
-          )} */}
+          )}
           <Col xs={24} style={{ marginTop: "0.8rem" }}>
             <Link href="/data-error-2">
               <Button
