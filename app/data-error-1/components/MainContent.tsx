@@ -140,7 +140,7 @@ const columns: ColumnsType<TpsData> = [
       const descriptionConvension = [
         "Jumlah Surat Suara Sah dan Jumlah Suara Seluruh Paslon sama",
         "Data masih diproses di web KPU",
-        `Jumlah Surat Suara Sah adalah ${record.total_valid_votes} sedangkan Jumlah Suara Seluruh Paslon adalah ${record.total_sum_votes}`,
+        `Jumlah Suara Seluruh Paslon adalah ${record.total_sum_votes}, sedangkan Jumlah Surat Suara Sah adalah ${record.total_valid_votes}`,
       ];
 
       return (
