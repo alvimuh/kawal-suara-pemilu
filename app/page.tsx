@@ -8,7 +8,6 @@ import {
   Col,
   Divider,
   Flex,
-  Popover,
   Row,
   Skeleton,
   Statistic,
@@ -174,8 +173,8 @@ export default function Page() {
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Popover
-                  content="Jumlah TPS dengan jumlah suara seluruh paslon dan jumlah surat suara sah adalah sama"
+                <Tooltip
+                  title="Jumlah TPS dengan jumlah suara seluruh paslon dan jumlah surat suara sah adalah sama"
                   placement="bottomLeft"
                 >
                   <Statistic
@@ -196,7 +195,7 @@ export default function Page() {
                       cursor: "help",
                     }}
                   />
-                </Popover>
+                </Tooltip>
               )}
             </Card>
           </Col>
@@ -205,8 +204,8 @@ export default function Page() {
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Popover
-                  content="Jumlah TPS dengan jumlah suara seluruh paslon berbeda dengan jumlah surat suara sah"
+                <Tooltip
+                  title="Jumlah TPS dengan jumlah suara seluruh paslon berbeda dengan jumlah surat suara sah"
                   placement="bottomLeft"
                 >
                   <Statistic
@@ -227,7 +226,7 @@ export default function Page() {
                       cursor: "help",
                     }}
                   />
-                </Popover>
+                </Tooltip>
               )}
             </Card>
           </Col>
@@ -236,8 +235,8 @@ export default function Page() {
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Popover
-                  content="Jumlah TPS dengan total suara seluruh paslon adalah 0"
+                <Tooltip
+                  title="Jumlah TPS dengan total suara seluruh paslon adalah 0"
                   placement="bottomLeft"
                 >
                   <Statistic
@@ -258,7 +257,7 @@ export default function Page() {
                       cursor: "help",
                     }}
                   />
-                </Popover>
+                </Tooltip>
               )}
             </Card>
           </Col>
@@ -317,8 +316,8 @@ export default function Page() {
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Popover
-                  content="Jumlah TPS dengan total suara seluruh paslon tidak melebihi jumlah pengguna hak pilih"
+                <Tooltip
+                  title="Jumlah TPS dengan total suara seluruh paslon tidak melebihi jumlah pengguna hak pilih"
                   placement="bottomLeft"
                 >
                   <Statistic
@@ -339,7 +338,7 @@ export default function Page() {
                       cursor: "help",
                     }}
                   />
-                </Popover>
+                </Tooltip>
               )}
             </Card>
           </Col>
@@ -348,8 +347,8 @@ export default function Page() {
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Popover
-                  content="Jumlah TPS dengan total suara seluruh paslon melebihi jumlah pengguna hak pilih"
+                <Tooltip
+                  title="Jumlah TPS dengan total suara seluruh paslon melebihi jumlah pengguna hak pilih"
                   placement="bottomLeft"
                 >
                   <Statistic
@@ -370,7 +369,7 @@ export default function Page() {
                       cursor: "help",
                     }}
                   />
-                </Popover>
+                </Tooltip>
               )}
             </Card>
           </Col>
@@ -379,8 +378,8 @@ export default function Page() {
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
               ) : (
-                <Popover
-                  content="Jumlah TPS dengan total suara seluruh paslon adalah 0"
+                <Tooltip
+                  title="Jumlah TPS dengan total suara seluruh paslon adalah 0"
                   placement="bottomLeft"
                 >
                   <Statistic
@@ -401,7 +400,7 @@ export default function Page() {
                       cursor: "help",
                     }}
                   />
-                </Popover>
+                </Tooltip>
               )}
             </Card>
           </Col>
