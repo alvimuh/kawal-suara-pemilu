@@ -17,7 +17,7 @@ type SelectName = "provinsi" | "kabupaten" | "kecamatan" | "kelurahan";
 const optionsWithDisabled = [
   { label: "Semua", value: "all" },
   { label: "Valid", value: "valid" },
-  { label: "Berpotensi Tidak Valid", value: "invalid" },
+  { label: "Tidak Valid", value: "invalid" },
 ];
 
 function Filter({
