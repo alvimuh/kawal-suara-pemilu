@@ -83,7 +83,7 @@ function Filter({
     params.set(name, value);
     params.set("page", "1");
 
-    if (name === "provinsi" && value === undefined) {
+    if (name === "provinsi") {
       setFormData((prevState) => ({
         ...prevState,
         provinsi: value,
@@ -92,13 +92,13 @@ function Filter({
         kelurahan: null,
       }));
 
-      params.delete("provinsi");
+      if (value === undefined) params.delete("provinsi");
       params.delete("kabupaten");
       params.delete("kecamatan");
       params.delete("kelurahan");
     }
 
-    if (name === "kabupaten" && value === undefined) {
+    if (name === "kabupaten") {
       setFormData((prevState) => ({
         ...prevState,
         kabupaten: value,
@@ -106,29 +106,29 @@ function Filter({
         kelurahan: null,
       }));
 
-      params.delete("kabupaten");
+      if (value === undefined) params.delete("kabupaten");
       params.delete("kecamatan");
       params.delete("kelurahan");
     }
 
-    if (name === "kecamatan" && value === undefined) {
+    if (name === "kecamatan") {
       setFormData((prevState) => ({
         ...prevState,
         kecamatan: value,
         kelurahan: null,
       }));
 
-      params.delete("kecamatan");
+      if (value === undefined) params.delete("kecamatan");
       params.delete("kelurahan");
     }
 
-    if (name === "kelurahan" && value === undefined) {
+    if (name === "kelurahan") {
       setFormData((prevState) => ({
         ...prevState,
         kelurahan: value,
       }));
 
-      params.delete("kelurahan");
+      if (value === undefined) params.delete("kelurahan");
     }
 
     setFormData((prevState) => ({
