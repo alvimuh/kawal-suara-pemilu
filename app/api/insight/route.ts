@@ -9,24 +9,29 @@ export async function GET(request: NextRequest) {
       const queryResult: Insight[] = await prisma.$queryRaw`SELECT
         sum(
               CASE
-                  WHEN kpu_tps_v2.total_votes = kpu_tps_v2.total_sum_votes THEN 1
+                  WHEN kpu_tps_v2.selisih_suara_paslon_dan_jumlah_sah = 0 AND total_votes != 0 AND total_sum_votes != 0 THEN 1
                   ELSE 0
               END) AS total_data_not_error_1,
         sum(
               CASE
-                  WHEN kpu_tps_v2.total_votes <> kpu_tps_v2.total_sum_votes THEN 1
+                  WHEN kpu_tps_v2.selisih_suara_paslon_dan_jumlah_sah != 0 AND total_votes != 0 AND total_sum_votes != 0 THEN 1
                   ELSE 0
               END) AS total_data_error_1,
         sum(
               CASE
-                  WHEN kpu_tps_v2.jml_hak_pilih <= kpu_tps_v2.total_sum_votes THEN 1
+                  WHEN kpu_tps_v2.jml_hak_pilih <= kpu_tps_v2.total_sum_votes AND total_votes != 0 AND total_sum_votes != 0 THEN 1
                   ELSE 0
               END) AS total_data_not_error_2,
         sum(
               CASE
-                  WHEN kpu_tps_v2.jml_hak_pilih > kpu_tps_v2.total_sum_votes THEN 1
+                  WHEN kpu_tps_v2.jml_hak_pilih > kpu_tps_v2.total_sum_votes AND total_votes != 0 AND total_sum_votes != 0 THEN 1
                   ELSE 0
               END) AS total_data_error_2,
+        sum(
+              CASE
+                  WHEN total_votes = 0 AND total_sum_votes = 0  THEN 1
+                  ELSE 0
+              END) AS total_data_null,
         count(*) AS total
         FROM kpu_tps_v2;`;
 

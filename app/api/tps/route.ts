@@ -68,6 +68,7 @@ export async function GET(request: NextRequest) {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
+      console.log(where);
 
       let count = await prisma.kpu_tps_v2.count({ where });
 
@@ -141,6 +142,7 @@ export async function GET(request: NextRequest) {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
+      console.log(where);
 
       let count = await prisma.kpu_tps_v2.count({ where });
 

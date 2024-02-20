@@ -166,16 +166,8 @@ export default function Page() {
               anggap data TPS tersebut adalah valid. Dari validasi sederhana ini
               saja, kami menemukan cukup banyak data yang berpotensi keliru.
             </Paragraph>
-
-            <Paragraph>
-              Sejauh ini, dari{" "}
-              {insight
-                ? insight.total.toLocaleString().replace(",", ".")
-                : null}{" "}
-              TPS yang kami dapatkan, kami menemukan:
-            </Paragraph>
           </Col>
-          <Col xs={24} sm={8}>
+          {/* <Col xs={24} sm={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
@@ -221,6 +213,29 @@ export default function Page() {
               )}
             </Card>
           </Col>
+          <Col xs={24} sm={8}>
+            <Card bordered={false}>
+              {isLoading || isError ? (
+                <Skeleton paragraph={false} avatar loading active />
+              ) : (
+                <Statistic
+                  title="Data Kosong / Diproses KPU"
+                  value={insight?.total_data_null}
+                  valueStyle={{ color: "#faad14" }}
+                  groupSeparator="."
+                  prefix={
+                    <MdOutlineRunningWithErrors
+                      size={30}
+                      style={{
+                        verticalAlign: "-0.25em",
+                      }}
+                    />
+                  }
+                  suffix="TPS"
+                />
+              )}
+            </Card>
+          </Col>
           {isError && (
             <Col xs={24} sm={16}>
               <Alert
@@ -228,7 +243,7 @@ export default function Page() {
                 type="warning"
               />
             </Col>
-          )}
+          )} */}
           <Col xs={24} style={{ marginTop: "0.8rem" }}>
             <Link href="/data-error-1">
               <Button
@@ -270,16 +285,8 @@ export default function Page() {
               atribut data tersebut, maka kami anggap data TPS tersebut adalah
               valid.
             </Paragraph>
-
-            <Paragraph>
-              Sejauh ini, dari{" "}
-              {insight
-                ? insight.total.toLocaleString().replace(",", ".")
-                : null}{" "}
-              TPS yang kami dapatkan, kami menemukan:
-            </Paragraph>
           </Col>
-          <Col xs={24} sm={8}>
+          {/* <Col xs={24} sm={8}>
             <Card bordered={false}>
               {isLoading || isError ? (
                 <Skeleton paragraph={false} avatar loading active />
@@ -325,6 +332,29 @@ export default function Page() {
               )}
             </Card>
           </Col>
+          <Col xs={24} sm={8}>
+            <Card bordered={false}>
+              {isLoading || isError ? (
+                <Skeleton paragraph={false} avatar loading active />
+              ) : (
+                <Statistic
+                  title="Data Kosong / Diproses KPU"
+                  value={insight?.total_data_null}
+                  valueStyle={{ color: "#faad14" }}
+                  groupSeparator="."
+                  prefix={
+                    <MdOutlineRunningWithErrors
+                      size={30}
+                      style={{
+                        verticalAlign: "-0.25em",
+                      }}
+                    />
+                  }
+                  suffix="TPS"
+                />
+              )}
+            </Card>
+          </Col>
           {isError && (
             <Col xs={24} sm={16}>
               <Alert
@@ -332,7 +362,7 @@ export default function Page() {
                 type="warning"
               />
             </Col>
-          )}
+          )} */}
           <Col xs={24} style={{ marginTop: "0.8rem" }}>
             <Link href="/data-error-2">
               <Button
