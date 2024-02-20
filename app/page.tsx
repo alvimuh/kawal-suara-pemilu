@@ -71,17 +71,17 @@ export default function Page() {
             fontWeight: 300,
             padding: "0 2rem",
             textAlign: "center",
-            marginBottom: "3rem",
           }}
         >
-          Analisa sederhana dari hasil perhitungan Real Count Pilpres 2024, data
-          didapatkan langsung dari web KPU.
+          Analisa sederhana dari hasil perhitungan Real Count Pilpres 2024. Data
+          TPS didapatkan langsung dari web KPU.
         </Paragraph>
         <div
           style={{
-            marginBottom: "-5rem",
+            marginTop: "3rem",
+            marginBottom: "-3rem",
             padding: "0 2rem",
-            width: "80%",
+            width: "70%",
           }}
         >
           <img
@@ -355,17 +355,26 @@ export default function Page() {
 
         <Divider />
         <Row gutter={[12, 12]} style={{ marginTop: "4rem" }}>
-          <Col xs={24} md={18} style={{ marginBottom: "1rem" }}>
+          <Col span={24}>
             <Title
               level={2}
               style={{
                 fontSize: "1.8rem",
-                marginBottom: "1rem",
+                marginBottom: 4,
               }}
             >
               Dashboard Kawal Pemilu 2024
             </Title>
-            <ModalDisclaimer />
+          </Col>
+          <Col span={24}>
+            <Paragraph style={{ fontSize: "1rem", color: "GrayText" }}>
+              <span style={{ marginRight: 12 }}>
+                Anda juga dapat membuka dashboard yang lebih lengkap di
+              </span>
+              <Button href="https://kawalrealcount.isnan.me" target="_blank">
+                kawalrealcount.isnan.me
+              </Button>
+            </Paragraph>
           </Col>
           <Col xs={24} md={8}>
             <Iframe
@@ -437,18 +446,9 @@ export default function Page() {
               }}
             ></Iframe>
           </Col>
-        </Row>
-        <Row>
-          <Paragraph
-            style={{ fontSize: "1rem", marginTop: "2rem", color: "GrayText" }}
-          >
-            <span style={{ marginRight: 12 }}>
-              Anda juga dapat membuka dashboard yang lebih lengkap di
-            </span>
-            <Button href="https://kawalrealcount.isnan.me" target="_blank">
-              kawalrealcount.isnan.me
-            </Button>
-          </Paragraph>
+          <Col span={24}>
+            <ModalDisclaimer />
+          </Col>
         </Row>
         <Divider />
 

@@ -22,7 +22,7 @@ const ModalDisclaimer: React.FC = () => {
   return (
     <>
       <Button
-        type="primary"
+        color="warning"
         onClick={showModal}
         icon={
           <IoMdInformationCircleOutline

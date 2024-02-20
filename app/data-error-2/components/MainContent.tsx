@@ -183,7 +183,10 @@ export default function MainContent() {
   return (
     <>
       <Row style={{ padding: "24px 48px" }}>
-        <Col span={24}>
+        <Col span={24} style={{ marginBottom: 24 }}>
+          <ModalDisclaimer />
+        </Col>
+        <Col span={24} style={{ marginBottom: 24 }}>
           <Title
             level={2}
             style={{
@@ -193,23 +196,6 @@ export default function MainContent() {
             Isu Data #2: TPS Dengan Jumlah Perolehan Suara Yang Melebihi Jumlah
             Pengguna Hak Pilih
           </Title>
-          <Paragraph>
-            Pada pengujian kedua ini, kami juga mendefinisikan dua status data
-            tiap TPS, yakni valid dan berpotensi tidak valid. Contoh: Jika
-            dijumlahkan hasil perolehan suara Paslon 01 + 02 + 03 adalah 400
-            suara, kemudian pada atribut Jumlah Hak Suara adalah 300, maka
-            terdapat kelebihan 100 suara yang menyebabkan data dari TPS tersebut
-            berpotensi tidak valid. Jika tidak ada selisih antara dua atribut
-            data tersebut, maka kami anggap data TPS tersebut adalah valid.
-          </Paragraph>
-          <Paragraph>
-            Data yang disajikan dibawah ini merupakan hasil pengujian kami,
-            terhadap data perhitungan suara real count yang didapatkan melalui
-            web KPU dengan melakukan proses web scraping.
-          </Paragraph>
-        </Col>
-        <Col span={24} style={{ marginBottom: 24 }}>
-          <ModalDisclaimer />
         </Col>
         <Col span={24}>
           <Filter onFilterChanged={reload} />
