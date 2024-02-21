@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
       let count = await prisma.kpu_tps_v2.count({ where });
 
       if (tpsData !== null && tpsData !== undefined) {
-        tpsData = tpsData.map((item) => {
+        tpsData = tpsData.map((item: any) => {
           let status = 0;
           if (
             Number(item.total_votes) == 0 ||
@@ -144,7 +144,7 @@ export async function GET(request: NextRequest) {
       let count = await prisma.kpu_tps_v2.count({ where });
 
       if (tpsData !== null && tpsData !== undefined) {
-        tpsData = tpsData.map((item) => {
+        tpsData = tpsData.map((item: any) => {
           let status = 0;
           let diff = 0;
           if (
