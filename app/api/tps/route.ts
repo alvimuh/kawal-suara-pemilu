@@ -5,6 +5,9 @@ import json from "@/utils/json";
 export async function GET(request: NextRequest) {
   const searchParams = {
     type: request.nextUrl.searchParams.get("type"),
+    gt: request.nextUrl.searchParams.get("gt"),
+    lt: request.nextUrl.searchParams.get("lt"),
+    gte: request.nextUrl.searchParams.get("gte"),
     page: request.nextUrl.searchParams.get("page"),
     size: request.nextUrl.searchParams.get("size"),
     provinsi: request.nextUrl.searchParams.get("provinsi"),
@@ -68,9 +71,8 @@ export async function GET(request: NextRequest) {
         skip: (page - 1) * pageSize,
         take: pageSize,
       });
-      console.log(where);
 
-      let count = await prisma.kpu_tps_v2.count({ where });
+      let count = 0;
 
       if (tpsData !== null && tpsData !== undefined) {
         tpsData = tpsData.map((item) => {
@@ -134,14 +136,26 @@ export async function GET(request: NextRequest) {
         }
       }
 
+      if (searchParams.gt) {
+        where.code = {
+          gt: searchParams.gt,
+        };
+      }
+      if (searchParams.gte && searchParams.lt) {
+        where.code = {
+          gte: searchParams.gte,
+          lt: searchParams.lt,
+        };
+      }
+
       let tpsData = await prisma.kpu_tps_v2.findMany({
         where,
-        orderBy: orderBy,
-        skip: (page - 1) * pageSize,
+        // skip: (page - 1) * pageSize,
+        orderBy: { id: "asc" },
         take: pageSize,
       });
 
-      let count = await prisma.kpu_tps_v2.count({ where });
+      let count = 0;
 
       if (tpsData !== null && tpsData !== undefined) {
         tpsData = tpsData.map((item) => {

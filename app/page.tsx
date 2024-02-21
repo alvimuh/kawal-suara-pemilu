@@ -98,6 +98,12 @@ export default function Page() {
       <section style={{ padding: "32px 48px" }}>
         <Row>
           <Col>
+            <Alert
+              message="Website sedang dalam Maintenance"
+              description="Mohon maaf, saat ini kami sedang melakukan maintenance database. Mohon untuk bisa mencoba beberapa saat lagi."
+              type="warning"
+              showIcon
+            />
             <Title
               level={2}
               style={{
